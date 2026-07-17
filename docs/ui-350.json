@@ -39,10 +39,30 @@
       "bottom": 445
     },
     "orb_loader_va": "0x478bd4",
+    "orb_ctor_va": "0x478b17",
     "orb_hp_asset": "orb001.epf",
     "orb_mp_asset": "orb002.epf",
+    "orb_hp_rect": {
+      "left": 0,
+      "top": 310,
+      "right": 83,
+      "bottom": 393
+    },
+    "orb_mp_rect": {
+      "left": 0,
+      "top": 395,
+      "right": 83,
+      "bottom": 478
+    },
     "orb_select_flag_off": "0xEA",
-    "orb_fill_frame_off": "0xE8"
+    "orb_fill_frame_off": "0xE8",
+    "minimap_ctor_va": "0x401d3a",
+    "minimap_rect": {
+      "left": 559,
+      "top": 310,
+      "right": 639,
+      "bottom": 417
+    }
   },
   "palettes": {
     "_default_ui": "legend.pal",
