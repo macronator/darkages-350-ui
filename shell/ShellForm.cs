@@ -24,6 +24,7 @@ public sealed class ShellForm : Form
     private Bitmap? _worldBmp;
     private int _camX, _camY;
     private static readonly Rectangle Viewport = new(2, 2, 608, 313);
+    private readonly List<(int mx, int my, MpfSprite spr)> _monsters = new();
 
     // animated weather overlay (falling rain), scrolled by a timer
     private Bitmap? _weather;
@@ -69,6 +70,9 @@ public sealed class ShellForm : Form
                 _tilePal = new Palette(dat.Read("field001.pal"));
                 _worldMap = WorldMap.FromFile(mapPath);
                 _camX = _worldMap.Width / 2; _camY = _worldMap.Height / 2;
+                // scatter a few creatures near the start so you meet them while walking
+                foreach (var (nm, dx, dy) in new[] { ("mns001", 2, -1), ("mns010", -3, 1), ("mns030", 1, 3), ("mns050", 4, 2), ("mns010", -2, -3) })
+                    try { _monsters.Add((_camX + dx, _camY + dy, MpfSprite.FromArchive(dat, nm))); } catch { }
             }
         }
         catch { _worldMap = null; }
@@ -129,6 +133,14 @@ public sealed class ShellForm : Form
         var c = new Canvas(_spec.Space.Width, _spec.Space.Height);   // 640x480, transparent (matches the composite)
         _worldMap.DrawFloor(c, _worldAtlas, _tilePal,
             Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
+        // creatures on the map, depth-sorted (farther first) so nearer ones overlap correctly
+        foreach (var m in _monsters.OrderBy(m => m.mx + m.my))
+        {
+            if (m.spr.Frames.Count == 0) continue;
+            var (sx, sy) = WorldMap.TileTopLeft(m.mx, m.my, Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
+            WorldMap.DrawSprite(c, m.spr.Frames[0], _pal, sx + TileAtlas.TW / 2, sy + 24,
+                Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom);
+        }
         // minimap in its socket, marking the current position
         if (_spec.Constants.MinimapRect is Rect mm)
             _worldMap.DrawMinimap(c, _worldAtlas, _tilePal, mm.Left, mm.Top, mm.Right, mm.Bottom, _camX, _camY);
@@ -197,14 +209,25 @@ public sealed class ShellForm : Form
         catch (KeyNotFoundException) { return null; }
     }
 
+    private readonly Dictionary<string, Point> _lastPos = new(StringComparer.OrdinalIgnoreCase);
+    private int _cascade;
+
     private void ToggleWindow(string asset)
     {
         var existing = _open.FirstOrDefault(w => w.Asset.Equals(asset, StringComparison.OrdinalIgnoreCase));
-        if (existing != null) { _open.Remove(existing); Invalidate(); return; }
+        if (existing != null) { _lastPos[asset] = new Point(existing.X, existing.Y); _open.Remove(existing); Invalidate(); return; }
         var bmp = WindowBitmap(asset);
         if (bmp == null) return;
-        var (x, y) = WindowCatalog.PositionOf(asset);
-        _open.Add(new OpenWin { Asset = asset, X = x, Y = y, Bmp = bmp });
+        Point pos;
+        if (_lastPos.TryGetValue(asset, out var remembered))
+            pos = remembered;                                   // reopen where you left it
+        else
+        {
+            // cascade fresh windows so they don't stack; keep them on-screen above the chat panel
+            int step = (_cascade++ % 6);
+            pos = new Point(20 + step * 26, 12 + step * 22);
+        }
+        _open.Add(new OpenWin { Asset = asset, X = pos.X, Y = pos.Y, Bmp = bmp });
         Invalidate();
     }
 
@@ -261,7 +284,11 @@ public sealed class ShellForm : Form
         if (_drag != null) { _drag.X = e.X - _dragOffset.X; _drag.Y = e.Y - _dragOffset.Y; Invalidate(); }
     }
 
-    protected override void OnMouseUp(MouseEventArgs e) => _drag = null;
+    protected override void OnMouseUp(MouseEventArgs e)
+    {
+        if (_drag != null) _lastPos[_drag.Asset] = new Point(_drag.X, _drag.Y);  // remember where it was dragged
+        _drag = null;
+    }
 
     private void Walk(int dx, int dy) { _camX += dx; _camY += dy; RenderWorld(); }
 

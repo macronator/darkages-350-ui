@@ -21,6 +21,7 @@
     <Compile Include="..\client\WindowCatalog.cs" Link="shared\WindowCatalog.cs" />
     <Compile Include="..\client\Font.cs" Link="shared\Font.cs" />
     <Compile Include="..\client\World.cs" Link="shared\World.cs" />
+    <Compile Include="..\client\Mpf.cs" Link="shared\Mpf.cs" />
   </ItemGroup>
 
 </Project>

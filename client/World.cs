@@ -93,10 +93,41 @@ public sealed class WorldMap
         int o = (y * c.W + x) * 4; c.Rgba[o] = r; c.Rgba[o + 1] = g; c.Rgba[o + 2] = b; c.Rgba[o + 3] = 255;
     }
 
+    private const int HalfW = TileAtlas.TW / 2, StepY = 13;
+
+    /// <summary>Screen top-left of a tile's diamond, for the given camera + viewport.</summary>
+    public static (int sx, int sy) TileTopLeft(int mx, int my, int vx0, int vy0, int vx1, int vy1, int camX, int camY)
+    {
+        int cox = vx0 + (vx1 - vx0) / 2 - TileAtlas.TW / 2;
+        int coy = vy0 + (vy1 - vy0) / 2 - TileAtlas.TH / 2;
+        return ((mx - my - (camX - camY)) * HalfW + cox, (mx + my - (camX + camY)) * StepY + coy);
+    }
+
+    /// <summary>Blit an MPF creature frame so its bottom-centre stands on (footX,footY), clipped to the viewport.</summary>
+    public static void DrawSprite(Canvas c, MpfFrame f, Palette pal, int footX, int footY, int vx0, int vy0, int vx1, int vy1)
+    {
+        int x0 = footX - f.Width / 2, y0 = footY - f.Height;
+        for (int y = 0; y < f.Height; y++)
+        {
+            int dy = y0 + y;
+            if (dy < vy0 || dy >= vy1) continue;
+            for (int x = 0; x < f.Width; x++)
+            {
+                byte idx = f.Pixels[y * f.Width + x];
+                if (idx == 0) continue;
+                int dx = x0 + x;
+                if (dx < vx0 || dx >= vx1) continue;
+                var (r, g, b) = pal.Colors[idx];
+                int o = (dy * c.W + dx) * 4;
+                c.Rgba[o] = r; c.Rgba[o + 1] = g; c.Rgba[o + 2] = b; c.Rgba[o + 3] = 255;
+            }
+        }
+    }
+
     /// <summary>Draw the floor layer into a viewport rectangle, camera-centered on cell (camX,camY).</summary>
     public void DrawFloor(Canvas c, TileAtlas atlas, Palette pal, int vx0, int vy0, int vx1, int vy1, int camX, int camY)
     {
-        const int halfW = TileAtlas.TW / 2, stepY = 13;
+        const int halfW = HalfW, stepY = StepY;
         int cox = vx0 + (vx1 - vx0) / 2 - TileAtlas.TW / 2;
         int coy = vy0 + (vy1 - vy0) / 2 - TileAtlas.TH / 2;
 
