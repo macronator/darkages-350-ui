@@ -18,6 +18,7 @@ scripts/
   da_epf2png.py     render a single .epf's frames to PNGs
   render_ui.py      render a UI .epf to a contact-sheet PNG (all frames in a grid)
   is3_extract.py    extract DarkAges.exe/.dat from a 1997 InstallShield 3 `_SETUP.1` (no VM needed)
+  da_fnt.py         .fnt bitmap-font reader + text renderer (eng00/eng01: 8x12, ASCII 0x21)
   da_re.py          static-analysis toolkit for the 32-bit client PE (pefile + capstone)
   extract_layout.py recover the UI rectangle layout from DarkAges.exe -> Markdown table
 docs/
@@ -37,6 +38,10 @@ shell/              C# (WinForms) live client shell: interactive window driven b
   pixels, then a frame table of `{ u16 top,left,bottom,right; u32 start,end }` bounding boxes.
 - **PAL palette** — 768 bytes = 256 RGB triples. Some are DAC values (0–63); `render_ui.py` auto-scales.
   Index 0 is transparent. UI sprites pair with `legend.pal`; intro art with `Backpal1–6.pal`.
+- **FNT font** — a flat glyph array, no header: each glyph is 12 bytes (one row-bitmap per byte, MSB =
+  leftmost pixel = an 8×12 cell), covering printable ASCII from `0x21`. `eng00.fnt` = 1128 B = 94 glyphs.
+  Rendered proportionally by trimming trailing empty columns. This is the "runtime text" the client drew
+  into the (otherwise near-identical) window frames — names, stat numbers, chat.
 
 ## The UI layout
 

@@ -48,7 +48,23 @@ foreach (var name in openWindows)
     catch (KeyNotFoundException) { Console.Error.WriteLine($"  (window {asset} not in archive; skipped)"); }
 }
 
-// 4) optional region-map overlay
+// 4) chat text rendered with the real DA bitmap font (eng00.fnt)
+int sayIdx = Array.IndexOf(args, "--say");
+string[] chatLines = (sayIdx >= 0 && sayIdx + 1 < args.Length)
+    ? args[sayIdx + 1].Split('|', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+    : Array.Empty<string>();
+if (chatLines.Length > 0 && spec.Constants.ChatPanelRect is Rect cp)
+{
+    var font = DaFont.Load(dat, "eng00.fnt");
+    int y = cp.Top + 6;
+    foreach (var line in chatLines)
+    {
+        font.Draw(canvas, line, cp.Left + 10, y, (235, 215, 150));
+        y += font.Height() + 3;
+    }
+}
+
+// 5) optional region-map overlay
 if (drawMap)
 {
     void Box(Rect? r, byte cr, byte cg, byte cb) { if (r != null) canvas.Outline(r.Left, r.Top, r.Right, r.Bottom, cr, cg, cb); }
