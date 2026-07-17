@@ -25,6 +25,24 @@ public static class Gdi
         return bmp;
     }
 
+    /// <summary>Render one MPF creature frame to a 32bpp ARGB Bitmap (index 0 transparent).</summary>
+    public static Bitmap MpfToBitmap(MpfFrame f, Palette pal)
+    {
+        int w = Math.Max(1, f.Width), h = Math.Max(1, f.Height);
+        var bmp = new Bitmap(w, h, PixelFormat.Format32bppArgb);
+        var buf = new byte[w * h * 4];
+        for (int i = 0; i < f.Width * f.Height && i < f.Pixels.Length; i++)
+        {
+            byte idx = f.Pixels[i];
+            int o = i * 4;
+            if (idx == 0) { buf[o + 3] = 0; continue; }
+            var (r, g, b) = pal.Colors[idx];
+            buf[o] = b; buf[o + 1] = g; buf[o + 2] = r; buf[o + 3] = 255;
+        }
+        CopyInto(bmp, buf, w, h);
+        return bmp;
+    }
+
     /// <summary>Convert a composed RGBA Canvas to a Bitmap.</summary>
     public static Bitmap ToBitmap(Canvas c)
     {

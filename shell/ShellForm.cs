@@ -25,7 +25,11 @@ public sealed class ShellForm : Form
     private Bitmap? _worldBmp;
     private int _camX, _camY;
     private static readonly Rectangle Viewport = new(2, 2, 608, 313);
-    private readonly List<(int mx, int my, MpfSprite spr)> _monsters = new();
+
+    private sealed class Monster { public int Mx, My; public required Bitmap Bmp; }
+    private readonly List<Monster> _monsters = new();
+    private readonly Random _rng = new();
+    private int _tick;
 
     // animated weather overlay (falling rain), scrolled by a timer
     private Bitmap? _weather;
@@ -74,7 +78,13 @@ public sealed class ShellForm : Form
                 _camX = _worldMap.Width / 2; _camY = _worldMap.Height / 2;
                 // scatter a few creatures near the start so you meet them while walking
                 foreach (var (nm, dx, dy) in new[] { ("mns001", 2, -1), ("mns010", -3, 1), ("mns030", 1, 3), ("mns050", 4, 2), ("mns010", -2, -3) })
-                    try { _monsters.Add((_camX + dx, _camY + dy, MpfSprite.FromArchive(dat, nm))); } catch { }
+                    try
+                    {
+                        var spr = MpfSprite.FromArchive(dat, nm);
+                        if (spr.Frames.Count > 0)
+                            _monsters.Add(new Monster { Mx = _camX + dx, My = _camY + dy, Bmp = Gdi.MpfToBitmap(spr.Frames[0], _pal) });
+                    }
+                    catch { }
             }
         }
         catch { _worldMap = null; }
@@ -95,7 +105,7 @@ public sealed class ShellForm : Form
             var rain = new Epf(dat.Read("rain01.epf")).FirstDrawable;
             _weather = Gdi.FrameToBitmap(rain, _pal);            // index 0 transparent
             _rainTimer = new System.Windows.Forms.Timer { Interval = 90 };
-            _rainTimer.Tick += (_, _) => { if (_weatherOn && _weather != null) { _weatherY = (_weatherY + 4) % _weather.Height; Invalidate(Viewport); } };
+            _rainTimer.Tick += (_, _) => Tick();
             _rainTimer.Start();
         }
         catch { _weather = null; }
@@ -139,14 +149,7 @@ public sealed class ShellForm : Form
         if (_walls != null)
             _worldMap.DrawWalls(c, _walls, _tilePal,
                 Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
-        // creatures on the map, depth-sorted (farther first) so nearer ones overlap correctly
-        foreach (var m in _monsters.OrderBy(m => m.mx + m.my))
-        {
-            if (m.spr.Frames.Count == 0) continue;
-            var (sx, sy) = WorldMap.TileTopLeft(m.mx, m.my, Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
-            WorldMap.DrawSprite(c, m.spr.Frames[0], _pal, sx + TileAtlas.TW / 2, sy + 24,
-                Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom);
-        }
+        // (creatures are drawn as a live layer in OnPaint so they can move without rebuilding this bitmap)
         // minimap in its socket, marking the current position
         if (_spec.Constants.MinimapRect is Rect mm)
             _worldMap.DrawMinimap(c, _worldAtlas, _tilePal, mm.Left, mm.Top, mm.Right, mm.Bottom, _camX, _camY);
@@ -172,6 +175,18 @@ public sealed class ShellForm : Form
         var g = e.Graphics;
         g.DrawImageUnscaled(_bg, 0, 0);
         if (_worldBmp != null) g.DrawImageUnscaled(_worldBmp, 0, 0);   // world tiles over the black viewport
+        // live creature layer: wandering monsters, depth-sorted, clipped to the viewport
+        if (_monsters.Count > 0)
+        {
+            var save0 = g.Clip;
+            g.SetClip(Viewport);
+            foreach (var m in _monsters.OrderBy(m => m.Mx + m.My))
+            {
+                var (sx, sy) = WorldMap.TileTopLeft(m.Mx, m.My, Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
+                g.DrawImageUnscaled(m.Bmp, sx + TileAtlas.TW / 2 - m.Bmp.Width / 2, sy + 24 - m.Bmp.Height);
+            }
+            g.Clip = save0;
+        }
         if (_weatherOn && _weather != null)                           // scrolling rain, clipped to the viewport
         {
             var save = g.Clip;
@@ -297,6 +312,21 @@ public sealed class ShellForm : Form
     }
 
     private void Walk(int dx, int dy) { _camX += dx; _camY += dy; RenderWorld(); }
+
+    // per-frame animation: scroll the rain, and every ~0.7s let the monsters wander one cell
+    private void Tick()
+    {
+        _tick++;
+        if (_weatherOn && _weather != null) _weatherY = (_weatherY + 4) % _weather.Height;
+        if (_tick % 8 == 0 && _worldMap != null)
+            foreach (var m in _monsters)
+            {
+                int nx = Math.Clamp(m.Mx + _rng.Next(-1, 2), 0, _worldMap.Width - 1);
+                int ny = Math.Clamp(m.My + _rng.Next(-1, 2), 0, _worldMap.Height - 1);
+                m.Mx = nx; m.My = ny;
+            }
+        Invalidate(Viewport);
+    }
 
     private void UpdateTitle()
     {
