@@ -55,6 +55,15 @@
     "bkstory5.epf": "Backpal5.pal",
     "bkstory6.epf": "Backpal6.pal"
   },
+  "window_titles": {
+    "gset01.epf": "Game Setting",
+    "option01.epf": "Option",
+    "help.epf": "Help Dialog",
+    "Friend.epf": "Friend List",
+    "Legend.epf": "Character Legend Dialog",
+    "Users01.epf": "Users Dialog Pane",
+    "Macro01.epf": "Macro Setup"
+  },
   "windows": [
     {
       "asset": ".EPF",
@@ -103,7 +112,8 @@
           "site": "0x004336b2",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Backgrnd.epf",
@@ -163,7 +173,8 @@
           "site": "0x0043f38e",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "DlgBbs01.epf",
@@ -267,7 +278,8 @@
           "site": "0x00409fbf",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "DlgBbs02.epf",
@@ -426,7 +438,8 @@
           "site": "0x0040c264",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "DlgBbs03.epf",
@@ -530,7 +543,8 @@
           "site": "0x0040cd2b",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "DlgCre00.epf",
@@ -601,7 +615,8 @@
           "site": "0x004409e0",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "dlgCre00.epf",
@@ -617,7 +632,8 @@
           "site": "0x0044162d",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "dlgcre01.epf",
@@ -644,7 +660,8 @@
           "site": "0x00440b8c",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "dlgCre02.epf",
@@ -660,7 +677,8 @@
           "site": "0x004416da",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "dlgcre03.epf",
@@ -731,7 +749,8 @@
           "site": "0x004410a2",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "DlgLogin.epf",
@@ -747,7 +766,8 @@
           "site": "0x00442dca",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "DlgPass.epf",
@@ -763,7 +783,8 @@
           "site": "0x0044390b",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "DlgPass1.epf",
@@ -779,7 +800,8 @@
           "site": "0x00444703",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "emot01.epf",
@@ -806,7 +828,8 @@
           "site": "0x00433d62",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "equip01.epf",
@@ -822,7 +845,8 @@
           "site": "0x0041a1bd",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "equip02.epf",
@@ -838,7 +862,8 @@
           "site": "0x0041acc8",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "equip03.epf",
@@ -854,7 +879,8 @@
           "site": "0x0041ad2c",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "equip04.epf",
@@ -870,7 +896,8 @@
           "site": "0x0041ba2d",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "equip05.epf",
@@ -886,7 +913,8 @@
           "site": "0x0041baa1",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Exchange.epf",
@@ -902,7 +930,8 @@
           "site": "0x0041f157",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Friend.epf",
@@ -973,7 +1002,8 @@
           "site": "0x004780f3",
           "runtime": false
         }
-      ]
+      ],
+      "title": "Friend List"
     },
     {
       "asset": "gset01.epf",
@@ -1055,7 +1085,8 @@
           "site": "0x004776d6",
           "runtime": false
         }
-      ]
+      ],
+      "title": "Game Setting"
     },
     {
       "asset": "help.epf",
@@ -1170,7 +1201,8 @@
           "site": "0x0049d42f",
           "runtime": false
         }
-      ]
+      ],
+      "title": "Help Dialog"
     },
     {
       "asset": "helpbtn1.epf",
@@ -1208,7 +1240,8 @@
           "site": "0x004412a3",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Legend.epf",
@@ -1257,7 +1290,8 @@
           "site": "0x0040daf4",
           "runtime": false
         }
-      ]
+      ],
+      "title": "Character Legend Dialog"
     },
     {
       "asset": "Legend.pal",
@@ -1284,7 +1318,8 @@
           "site": "0x0047f22f",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Line001.epf",
@@ -1311,7 +1346,8 @@
           "site": "0x0047a6b0",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "lodmap.epf",
@@ -1327,7 +1363,8 @@
           "site": "0x0044c356",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "lodusr.epf",
@@ -1365,7 +1402,8 @@
           "site": "0x0049884f",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Macro01.epf",
@@ -1425,7 +1463,8 @@
           "site": "0x00476e5d",
           "runtime": false
         }
-      ]
+      ],
+      "title": "Macro Setup"
     },
     {
       "asset": "mail.epf",
@@ -1452,7 +1491,8 @@
           "site": "0x0047ae97",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "menucncl.epf",
@@ -1567,7 +1607,8 @@
           "site": "0x00444948",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "menuok.epf",
@@ -1605,7 +1646,8 @@
           "site": "0x004447d6",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "mns%03d.mpf",
@@ -1621,7 +1663,8 @@
           "site": "0x00434360",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "money.epf",
@@ -1736,7 +1779,8 @@
           "site": "0x004358a1",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "nation.epf",
@@ -1763,7 +1807,8 @@
           "site": "0x0041bd08",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "option01.epf",
@@ -1801,7 +1846,8 @@
           "site": "0x00476511",
           "runtime": true
         }
-      ]
+      ],
+      "title": "Option"
     },
     {
       "asset": "option02.epf",
@@ -1861,7 +1907,8 @@
           "site": "0x00475e27",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "option03.epf",
@@ -1899,7 +1946,8 @@
           "site": "0x00476009",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "option04.epf",
@@ -1915,7 +1963,8 @@
           "site": "0x004765cc",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Portrait.epf",
@@ -1931,7 +1980,8 @@
           "site": "0x00401746",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "setup02.epf",
@@ -1958,7 +2008,8 @@
           "site": "0x0048d70c",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "setup03.epf",
@@ -2029,7 +2080,8 @@
           "site": "0x0048da93",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "setup04.epf",
@@ -2232,7 +2284,8 @@
           "site": "0x0048e4f5",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "setup05.epf",
@@ -2259,7 +2312,8 @@
           "site": "0x0048d384",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "setup06.epf",
@@ -2275,7 +2329,8 @@
           "site": "0x0048d2a0",
           "runtime": true
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "spellani.epf",
@@ -2291,7 +2346,8 @@
           "site": "0x00425ca0",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "spelled.epf",
@@ -2329,7 +2385,8 @@
           "site": "0x00425bf9",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "SSBOTTOM.EPF",
@@ -2444,7 +2501,8 @@
           "site": "0x0048b234",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Stat001.epf",
@@ -2460,7 +2518,8 @@
           "site": "0x004273e2",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "svrBtn.epf",
@@ -2487,7 +2546,8 @@
           "site": "0x004842d8",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "SvrDlg.epf",
@@ -2503,7 +2563,8 @@
           "site": "0x00484129",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     },
     {
       "asset": "Users01.epf",
@@ -2563,7 +2624,8 @@
           "site": "0x0042b04a",
           "runtime": false
         }
-      ]
+      ],
+      "title": "Users Dialog Pane"
     },
     {
       "asset": "Users04.epf",
@@ -2579,7 +2641,8 @@
           "site": "0x0042b697",
           "runtime": false
         }
-      ]
+      ],
+      "title": null
     }
   ]
 }
