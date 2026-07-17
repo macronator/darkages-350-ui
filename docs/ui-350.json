@@ -1,0 +1,2585 @@
+{
+  "name": "Dark Ages v3.50 UI layout",
+  "source": "reverse-engineered from DarkAges.exe (May 2000 build) via da_re.py",
+  "coordinate_space": {
+    "width": 640,
+    "height": 480,
+    "origin": "top-left"
+  },
+  "constants": {
+    "tile_px": 32,
+    "layout_ctor_va": "0x42c856",
+    "layout_ctor_sig": "sub_42c856(rectPtr, Left, Top, Right, Bottom)",
+    "epf_loader_va": "0x43342e",
+    "background_asset": "Backgrnd.epf",
+    "background_rect": {
+      "left": 0,
+      "top": 0,
+      "right": 640,
+      "bottom": 480
+    },
+    "world_viewport_draw": {
+      "left": -54,
+      "top": -26,
+      "right": 674,
+      "bottom": 338,
+      "note": "game field blitted behind the frame's viewport hole; oversized/offset to allow scroll"
+    },
+    "chat_panel_rect": {
+      "left": 91,
+      "top": 316,
+      "right": 528,
+      "bottom": 436,
+      "asset": "panel01.epf/panel02.epf"
+    },
+    "right_toolbar_strip": {
+      "left": 531,
+      "top": 330,
+      "right": 553,
+      "bottom": 445
+    },
+    "orb_loader_va": "0x478bd4",
+    "orb_hp_asset": "orb001.epf",
+    "orb_mp_asset": "orb002.epf",
+    "orb_select_flag_off": "0xEA",
+    "orb_fill_frame_off": "0xE8"
+  },
+  "palettes": {
+    "_default_ui": "legend.pal",
+    "field001.epf": "field001.pal",
+    "staff.epf": "staff.pal",
+    "bkstory1.epf": "Backpal1.pal",
+    "bkstory2.epf": "Backpal2.pal",
+    "bkstory3.epf": "Backpal3.pal",
+    "bkstory4.epf": "Backpal4.pal",
+    "bkstory5.epf": "Backpal5.pal",
+    "bkstory6.epf": "Backpal6.pal"
+  },
+  "windows": [
+    {
+      "asset": ".EPF",
+      "rects": [
+        {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "w": 0,
+          "h": 0,
+          "fn": "0x004334c4",
+          "site": "0x00433520",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "w": 0,
+          "h": 0,
+          "fn": "0x004334c4",
+          "site": "0x00433565",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "w": 0,
+          "h": 0,
+          "fn": "0x004334c4",
+          "site": "0x00433626",
+          "runtime": false
+        },
+        {
+          "left": null,
+          "top": null,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x004334c4",
+          "site": "0x004336b2",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "Backgrnd.epf",
+      "rects": [
+        {
+          "left": 0,
+          "top": 0,
+          "right": 640,
+          "bottom": 480,
+          "w": 640,
+          "h": 480,
+          "fn": "0x0043eddd",
+          "site": "0x0043eedd",
+          "runtime": false
+        },
+        {
+          "left": -54,
+          "top": -26,
+          "right": 674,
+          "bottom": 338,
+          "w": 728,
+          "h": 364,
+          "fn": "0x0043eddd",
+          "site": "0x0043efa6",
+          "runtime": false
+        },
+        {
+          "left": 91,
+          "top": 316,
+          "right": 528,
+          "bottom": 436,
+          "w": 437,
+          "h": 120,
+          "fn": "0x0043eddd",
+          "site": "0x0043f0b1",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "w": 0,
+          "h": 0,
+          "fn": "0x0043eddd",
+          "site": "0x0043f2dd",
+          "runtime": false
+        },
+        {
+          "left": 531,
+          "top": 330,
+          "right": 553,
+          "bottom": 445,
+          "w": 22,
+          "h": 115,
+          "fn": "0x0043eddd",
+          "site": "0x0043f38e",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "DlgBbs01.epf",
+      "rects": [
+        {
+          "left": 528,
+          "top": 15,
+          "right": 598,
+          "bottom": 37,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00405589",
+          "site": "0x00405819",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 270,
+          "right": 598,
+          "bottom": 292,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00405589",
+          "site": "0x004058c0",
+          "runtime": false
+        },
+        {
+          "left": 28,
+          "top": 24,
+          "right": 508,
+          "bottom": 279,
+          "w": 480,
+          "h": 255,
+          "fn": "0x00405589",
+          "site": "0x00405961",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 15,
+          "right": 598,
+          "bottom": 37,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00406024",
+          "site": "0x00406455",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 225,
+          "right": 598,
+          "bottom": 247,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00406024",
+          "site": "0x0040662a",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 270,
+          "right": 598,
+          "bottom": 292,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00406024",
+          "site": "0x004066d1",
+          "runtime": false
+        },
+        {
+          "left": 28,
+          "top": 24,
+          "right": 508,
+          "bottom": 279,
+          "w": 480,
+          "h": 255,
+          "fn": "0x00406024",
+          "site": "0x00406793",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 195,
+          "right": 598,
+          "bottom": 217,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00406024",
+          "site": "0x0040685e",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 15,
+          "right": 598,
+          "bottom": 37,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00409bb5",
+          "site": "0x00409fbf",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "DlgBbs02.epf",
+      "rects": [
+        {
+          "left": 528,
+          "top": 15,
+          "right": 598,
+          "bottom": 37,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00408038",
+          "site": "0x00408309",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 225,
+          "right": 598,
+          "bottom": 247,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00408038",
+          "site": "0x00408595",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 270,
+          "right": 598,
+          "bottom": 292,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00408038",
+          "site": "0x0040863c",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 21,
+          "right": 337,
+          "bottom": 33,
+          "w": 222,
+          "h": 12,
+          "fn": "0x00408038",
+          "site": "0x004086da",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 45,
+          "right": 506,
+          "bottom": 57,
+          "w": 391,
+          "h": 12,
+          "fn": "0x00408038",
+          "site": "0x0040879a",
+          "runtime": false
+        },
+        {
+          "left": 28,
+          "top": 78,
+          "right": 508,
+          "bottom": 282,
+          "w": 480,
+          "h": 204,
+          "fn": "0x00408038",
+          "site": "0x0040891b",
+          "runtime": false
+        },
+        {
+          "left": 400,
+          "top": 21,
+          "right": 460,
+          "bottom": 33,
+          "w": 60,
+          "h": 12,
+          "fn": "0x00408038",
+          "site": "0x004089bb",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 15,
+          "right": 598,
+          "bottom": 37,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0040b80f",
+          "site": "0x0040baea",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 225,
+          "right": 598,
+          "bottom": 247,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0040b80f",
+          "site": "0x0040be0e",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 270,
+          "right": 298,
+          "bottom": 292,
+          "w": -230,
+          "h": 22,
+          "fn": "0x0040b80f",
+          "site": "0x0040beb5",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 21,
+          "right": 337,
+          "bottom": 33,
+          "w": 222,
+          "h": 12,
+          "fn": "0x0040b80f",
+          "site": "0x0040bf53",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 45,
+          "right": 506,
+          "bottom": 57,
+          "w": 391,
+          "h": 12,
+          "fn": "0x0040b80f",
+          "site": "0x0040c019",
+          "runtime": false
+        },
+        {
+          "left": 28,
+          "top": 78,
+          "right": 508,
+          "bottom": 282,
+          "w": 480,
+          "h": 204,
+          "fn": "0x0040b80f",
+          "site": "0x0040c1c4",
+          "runtime": false
+        },
+        {
+          "left": 400,
+          "top": 21,
+          "right": 460,
+          "bottom": 33,
+          "w": 60,
+          "h": 12,
+          "fn": "0x0040b80f",
+          "site": "0x0040c264",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "DlgBbs03.epf",
+      "rects": [
+        {
+          "left": 528,
+          "top": 15,
+          "right": 598,
+          "bottom": 37,
+          "w": 70,
+          "h": 22,
+          "fn": "0x004091b2",
+          "site": "0x0040920a",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 21,
+          "right": 337,
+          "bottom": 33,
+          "w": 222,
+          "h": 12,
+          "fn": "0x004091b2",
+          "site": "0x004092fd",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 43,
+          "right": 508,
+          "bottom": 59,
+          "w": 393,
+          "h": 16,
+          "fn": "0x004091b2",
+          "site": "0x00409381",
+          "runtime": false
+        },
+        {
+          "left": 28,
+          "top": 78,
+          "right": 508,
+          "bottom": 286,
+          "w": 480,
+          "h": 208,
+          "fn": "0x004091b2",
+          "site": "0x00409415",
+          "runtime": false
+        },
+        {
+          "left": 528,
+          "top": 15,
+          "right": 598,
+          "bottom": 37,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0040ca30",
+          "site": "0x0040ca88",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 21,
+          "right": 337,
+          "bottom": 33,
+          "w": 222,
+          "h": 12,
+          "fn": "0x0040ca30",
+          "site": "0x0040cb85",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 19,
+          "right": 339,
+          "bottom": 35,
+          "w": 224,
+          "h": 16,
+          "fn": "0x0040ca30",
+          "site": "0x0040cc10",
+          "runtime": false
+        },
+        {
+          "left": 115,
+          "top": 43,
+          "right": 508,
+          "bottom": 59,
+          "w": 393,
+          "h": 16,
+          "fn": "0x0040ca30",
+          "site": "0x0040cc97",
+          "runtime": false
+        },
+        {
+          "left": 28,
+          "top": 78,
+          "right": 508,
+          "bottom": 286,
+          "w": 480,
+          "h": 208,
+          "fn": "0x0040ca30",
+          "site": "0x0040cd2b",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "DlgCre00.epf",
+      "rects": [
+        {
+          "left": 451,
+          "top": 439,
+          "right": 521,
+          "bottom": 461,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0044060c",
+          "site": "0x00440723",
+          "runtime": false
+        },
+        {
+          "left": 551,
+          "top": 439,
+          "right": 621,
+          "bottom": 461,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0044060c",
+          "site": "0x004407ad",
+          "runtime": false
+        },
+        {
+          "left": 126,
+          "top": 29,
+          "right": 245,
+          "bottom": 45,
+          "w": 119,
+          "h": 16,
+          "fn": "0x0044060c",
+          "site": "0x00440823",
+          "runtime": false
+        },
+        {
+          "left": 135,
+          "top": 80,
+          "right": 244,
+          "bottom": 96,
+          "w": 109,
+          "h": 16,
+          "fn": "0x0044060c",
+          "site": "0x004408b0",
+          "runtime": false
+        },
+        {
+          "left": 135,
+          "top": 131,
+          "right": 244,
+          "bottom": 147,
+          "w": 109,
+          "h": 16,
+          "fn": "0x0044060c",
+          "site": "0x0044094b",
+          "runtime": false
+        },
+        {
+          "left": 467,
+          "top": 23,
+          "right": 503,
+          "bottom": 52,
+          "w": 36,
+          "h": 29,
+          "fn": "0x0044060c",
+          "site": "0x004409e0",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "dlgCre00.epf",
+      "rects": [
+        {
+          "left": 468,
+          "top": 88,
+          "right": 575,
+          "bottom": 194,
+          "w": 107,
+          "h": 106,
+          "fn": "0x00441536",
+          "site": "0x0044162d",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "dlgcre01.epf",
+      "rects": [
+        {
+          "left": 537,
+          "top": 23,
+          "right": 573,
+          "bottom": 52,
+          "w": 36,
+          "h": 29,
+          "fn": "0x0044060c",
+          "site": "0x00440ab3",
+          "runtime": false
+        },
+        {
+          "left": 417,
+          "top": 132,
+          "right": 435,
+          "bottom": 147,
+          "w": 18,
+          "h": 15,
+          "fn": "0x0044060c",
+          "site": "0x00440b8c",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "dlgCre02.epf",
+      "rects": [
+        {
+          "left": 464,
+          "top": 97,
+          "right": 574,
+          "bottom": 181,
+          "w": 110,
+          "h": 84,
+          "fn": "0x00441536",
+          "site": "0x004416da",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "dlgcre03.epf",
+      "rects": [
+        {
+          "left": 603,
+          "top": 132,
+          "right": 621,
+          "bottom": 147,
+          "w": 18,
+          "h": 15,
+          "fn": "0x0044060c",
+          "site": "0x00440c65",
+          "runtime": false
+        },
+        {
+          "left": 469,
+          "top": 230,
+          "right": 487,
+          "bottom": 245,
+          "w": 18,
+          "h": 15,
+          "fn": "0x0044060c",
+          "site": "0x00440d3e",
+          "runtime": false
+        },
+        {
+          "left": 555,
+          "top": 230,
+          "right": 573,
+          "bottom": 245,
+          "w": 18,
+          "h": 15,
+          "fn": "0x0044060c",
+          "site": "0x00440e17",
+          "runtime": false
+        },
+        {
+          "left": 469,
+          "top": 262,
+          "right": 487,
+          "bottom": 277,
+          "w": 18,
+          "h": 15,
+          "fn": "0x0044060c",
+          "site": "0x00440ef0",
+          "runtime": false
+        },
+        {
+          "left": 555,
+          "top": 262,
+          "right": 573,
+          "bottom": 277,
+          "w": 18,
+          "h": 15,
+          "fn": "0x0044060c",
+          "site": "0x00440fc9",
+          "runtime": false
+        },
+        {
+          "left": 327,
+          "top": 190,
+          "right": 352,
+          "bottom": 215,
+          "w": 25,
+          "h": 25,
+          "fn": "0x0044060c",
+          "site": "0x004410a2",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "DlgLogin.epf",
+      "rects": [
+        {
+          "left": 2,
+          "top": 134,
+          "right": 29,
+          "bottom": 150,
+          "w": 27,
+          "h": 16,
+          "fn": "0x00442d5e",
+          "site": "0x00442dca",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "DlgPass.epf",
+      "rects": [
+        {
+          "left": 9,
+          "top": 141,
+          "right": 36,
+          "bottom": 157,
+          "w": 27,
+          "h": 16,
+          "fn": "0x0044389c",
+          "site": "0x0044390b",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "DlgPass1.epf",
+      "rects": [
+        {
+          "left": 2,
+          "top": 134,
+          "right": 29,
+          "bottom": 150,
+          "w": 27,
+          "h": 16,
+          "fn": "0x00444697",
+          "site": "0x00444703",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "emot01.epf",
+      "rects": [
+        {
+          "left": null,
+          "top": null,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x00433965",
+          "site": "0x00433bb3",
+          "runtime": true
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 110,
+          "bottom": 84,
+          "w": 110,
+          "h": 84,
+          "fn": "0x00433965",
+          "site": "0x00433d62",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "equip01.epf",
+      "rects": [
+        {
+          "left": 228,
+          "top": 227,
+          "right": 262,
+          "bottom": 254,
+          "w": 34,
+          "h": 27,
+          "fn": "0x00419e4f",
+          "site": "0x0041a1bd",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "equip02.epf",
+      "rects": [
+        {
+          "left": 66,
+          "top": 0,
+          "right": 150,
+          "bottom": 294,
+          "w": 84,
+          "h": 294,
+          "fn": "0x0041ac5f",
+          "site": "0x0041acc8",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "equip03.epf",
+      "rects": [
+        {
+          "left": 0,
+          "top": 0,
+          "right": 150,
+          "bottom": 294,
+          "w": 150,
+          "h": 294,
+          "fn": "0x0041ac5f",
+          "site": "0x0041ad2c",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "equip04.epf",
+      "rects": [
+        {
+          "left": 212,
+          "top": 227,
+          "right": 246,
+          "bottom": 254,
+          "w": 34,
+          "h": 27,
+          "fn": "0x0041b843",
+          "site": "0x0041ba2d",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "equip05.epf",
+      "rects": [
+        {
+          "left": 34,
+          "top": 227,
+          "right": 68,
+          "bottom": 254,
+          "w": 34,
+          "h": 27,
+          "fn": "0x0041b843",
+          "site": "0x0041baa1",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "Exchange.epf",
+      "rects": [
+        {
+          "left": 115,
+          "top": 10,
+          "right": 525,
+          "bottom": 318,
+          "w": 410,
+          "h": 308,
+          "fn": "0x0041eb80",
+          "site": "0x0041f157",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "Friend.epf",
+      "rects": [
+        {
+          "left": 368,
+          "top": 274,
+          "right": 438,
+          "bottom": 294,
+          "w": 70,
+          "h": 20,
+          "fn": "0x00477e20",
+          "site": "0x00477e68",
+          "runtime": false
+        },
+        {
+          "left": 16,
+          "top": 274,
+          "right": 86,
+          "bottom": 294,
+          "w": 70,
+          "h": 20,
+          "fn": "0x00477e20",
+          "site": "0x00477ecc",
+          "runtime": false
+        },
+        {
+          "left": 66,
+          "top": null,
+          "right": 220,
+          "bottom": null,
+          "w": 154,
+          "h": null,
+          "fn": "0x00477e20",
+          "site": "0x00477f60",
+          "runtime": true
+        },
+        {
+          "left": 283,
+          "top": null,
+          "right": 429,
+          "bottom": null,
+          "w": 146,
+          "h": null,
+          "fn": "0x00477e20",
+          "site": "0x0047801c",
+          "runtime": true
+        },
+        {
+          "left": 1,
+          "top": 2,
+          "right": 455,
+          "bottom": 310,
+          "w": 454,
+          "h": 308,
+          "fn": "0x00477e20",
+          "site": "0x004780d7",
+          "runtime": false
+        },
+        {
+          "left": 89,
+          "top": 2,
+          "right": 543,
+          "bottom": 310,
+          "w": 454,
+          "h": 308,
+          "fn": "0x00477e20",
+          "site": "0x004780f3",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "gset01.epf",
+      "rects": [
+        {
+          "left": 368,
+          "top": 274,
+          "right": 438,
+          "bottom": 294,
+          "w": 70,
+          "h": 20,
+          "fn": "0x00477221",
+          "site": "0x00477278",
+          "runtime": false
+        },
+        {
+          "left": 27,
+          "top": null,
+          "right": 50,
+          "bottom": null,
+          "w": 23,
+          "h": null,
+          "fn": "0x00477221",
+          "site": "0x00477315",
+          "runtime": true
+        },
+        {
+          "left": 27,
+          "top": null,
+          "right": 50,
+          "bottom": null,
+          "w": 23,
+          "h": null,
+          "fn": "0x00477221",
+          "site": "0x00477398",
+          "runtime": true
+        },
+        {
+          "left": 66,
+          "top": null,
+          "right": 428,
+          "bottom": null,
+          "w": 362,
+          "h": null,
+          "fn": "0x00477221",
+          "site": "0x0047744b",
+          "runtime": true
+        },
+        {
+          "left": 66,
+          "top": null,
+          "right": 428,
+          "bottom": null,
+          "w": 362,
+          "h": null,
+          "fn": "0x00477221",
+          "site": "0x00477602",
+          "runtime": true
+        },
+        {
+          "left": 1,
+          "top": 2,
+          "right": 455,
+          "bottom": 310,
+          "w": 454,
+          "h": 308,
+          "fn": "0x00477221",
+          "site": "0x004776ba",
+          "runtime": false
+        },
+        {
+          "left": 89,
+          "top": 2,
+          "right": 543,
+          "bottom": 310,
+          "w": 454,
+          "h": 308,
+          "fn": "0x00477221",
+          "site": "0x004776d6",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "help.epf",
+      "rects": [
+        {
+          "left": 100,
+          "top": 381,
+          "right": 170,
+          "bottom": 401,
+          "w": 70,
+          "h": 20,
+          "fn": "0x0040100a",
+          "site": "0x0040105b",
+          "runtime": false
+        },
+        {
+          "left": 281,
+          "top": 381,
+          "right": 351,
+          "bottom": 401,
+          "w": 70,
+          "h": 20,
+          "fn": "0x0040100a",
+          "site": "0x004010d0",
+          "runtime": false
+        },
+        {
+          "left": 24,
+          "top": 57,
+          "right": 432,
+          "bottom": 361,
+          "w": 408,
+          "h": 304,
+          "fn": "0x0040100a",
+          "site": "0x004011a8",
+          "runtime": false
+        },
+        {
+          "left": 211,
+          "top": 29,
+          "right": 259,
+          "bottom": 41,
+          "w": 48,
+          "h": 12,
+          "fn": "0x0040100a",
+          "site": "0x00401227",
+          "runtime": false
+        },
+        {
+          "left": 208,
+          "top": 29,
+          "right": 262,
+          "bottom": 41,
+          "w": 54,
+          "h": 12,
+          "fn": "0x0040100a",
+          "site": "0x0040128b",
+          "runtime": false
+        },
+        {
+          "left": 95,
+          "top": 30,
+          "right": 546,
+          "bottom": 448,
+          "w": 451,
+          "h": 418,
+          "fn": "0x0040100a",
+          "site": "0x0040131f",
+          "runtime": false
+        },
+        {
+          "left": 370,
+          "top": 380,
+          "right": 440,
+          "bottom": 402,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0049d0df",
+          "site": "0x0049d1c2",
+          "runtime": false
+        },
+        {
+          "left": 212,
+          "top": 30,
+          "right": 260,
+          "bottom": 42,
+          "w": 48,
+          "h": 12,
+          "fn": "0x0049d0df",
+          "site": "0x0049d23b",
+          "runtime": false
+        },
+        {
+          "left": 34,
+          "top": 60,
+          "right": 430,
+          "bottom": 360,
+          "w": 396,
+          "h": 300,
+          "fn": "0x0049d0df",
+          "site": "0x0049d393",
+          "runtime": false
+        },
+        {
+          "left": 100,
+          "top": 5,
+          "right": 551,
+          "bottom": 423,
+          "w": 451,
+          "h": 418,
+          "fn": "0x0049d0df",
+          "site": "0x0049d42f",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "helpbtn1.epf",
+      "rects": [
+        {
+          "left": 50,
+          "top": null,
+          "right": 415,
+          "bottom": null,
+          "w": 365,
+          "h": null,
+          "fn": "0x0044060c",
+          "site": "0x00441182",
+          "runtime": true
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 640,
+          "bottom": 480,
+          "w": 640,
+          "h": 480,
+          "fn": "0x0044060c",
+          "site": "0x0044123f",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 640,
+          "bottom": 480,
+          "w": 640,
+          "h": 480,
+          "fn": "0x0044060c",
+          "site": "0x004412a3",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "Legend.epf",
+      "rects": [
+        {
+          "left": null,
+          "top": null,
+          "right": 30,
+          "bottom": 282,
+          "w": null,
+          "h": null,
+          "fn": "0x0040d917",
+          "site": "0x0040d9ab",
+          "runtime": true
+        },
+        {
+          "left": 33,
+          "top": 60,
+          "right": 433,
+          "bottom": 360,
+          "w": 400,
+          "h": 300,
+          "fn": "0x0040d917",
+          "site": "0x0040da18",
+          "runtime": false
+        },
+        {
+          "left": 365,
+          "top": 377,
+          "right": 435,
+          "bottom": 399,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0040d917",
+          "site": "0x0040da90",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 451,
+          "bottom": 418,
+          "w": 451,
+          "h": 418,
+          "fn": "0x0040d917",
+          "site": "0x0040daf4",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "Legend.pal",
+      "rects": [
+        {
+          "left": 0,
+          "top": 0,
+          "right": 640,
+          "bottom": 480,
+          "w": 640,
+          "h": 480,
+          "fn": "0x0043d52d",
+          "site": "0x0043dbb6",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x0047ec0c",
+          "site": "0x0047f22f",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "Line001.epf",
+      "rects": [
+        {
+          "left": 0,
+          "top": 0,
+          "right": 16,
+          "bottom": 16,
+          "w": 16,
+          "h": 16,
+          "fn": "0x0047a103",
+          "site": "0x0047a69c",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 16,
+          "bottom": 16,
+          "w": 16,
+          "h": 16,
+          "fn": "0x0047a103",
+          "site": "0x0047a6b0",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "lodmap.epf",
+      "rects": [
+        {
+          "left": 193,
+          "top": 175,
+          "right": null,
+          "bottom": 185,
+          "w": null,
+          "h": 10,
+          "fn": "0x0044c0a6",
+          "site": "0x0044c356",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "lodusr.epf",
+      "rects": [
+        {
+          "left": 25,
+          "top": 35,
+          "right": null,
+          "bottom": 45,
+          "w": null,
+          "h": 10,
+          "fn": "0x0042c592",
+          "site": "0x0042c63a",
+          "runtime": true
+        },
+        {
+          "left": 25,
+          "top": 35,
+          "right": null,
+          "bottom": 45,
+          "w": null,
+          "h": 10,
+          "fn": "0x00498697",
+          "site": "0x00498766",
+          "runtime": true
+        },
+        {
+          "left": 25,
+          "top": 35,
+          "right": null,
+          "bottom": 45,
+          "w": null,
+          "h": 10,
+          "fn": "0x00498788",
+          "site": "0x0049884f",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "Macro01.epf",
+      "rects": [
+        {
+          "left": 368,
+          "top": 274,
+          "right": 438,
+          "bottom": 294,
+          "w": 70,
+          "h": 20,
+          "fn": "0x00476c3e",
+          "site": "0x00476c86",
+          "runtime": false
+        },
+        {
+          "left": 16,
+          "top": 274,
+          "right": 86,
+          "bottom": 294,
+          "w": 70,
+          "h": 20,
+          "fn": "0x00476c3e",
+          "site": "0x00476cea",
+          "runtime": false
+        },
+        {
+          "left": 66,
+          "top": null,
+          "right": 428,
+          "bottom": null,
+          "w": 362,
+          "h": null,
+          "fn": "0x00476c3e",
+          "site": "0x00476d7e",
+          "runtime": true
+        },
+        {
+          "left": 1,
+          "top": 2,
+          "right": 455,
+          "bottom": 310,
+          "w": 454,
+          "h": 308,
+          "fn": "0x00476c3e",
+          "site": "0x00476e41",
+          "runtime": false
+        },
+        {
+          "left": 89,
+          "top": 2,
+          "right": 543,
+          "bottom": 310,
+          "w": 454,
+          "h": 308,
+          "fn": "0x00476c3e",
+          "site": "0x00476e5d",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "mail.epf",
+      "rects": [
+        {
+          "left": null,
+          "top": null,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x0047adba",
+          "site": "0x0047ae34",
+          "runtime": true
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 22,
+          "bottom": 14,
+          "w": 22,
+          "h": 14,
+          "fn": "0x0047adba",
+          "site": "0x0047ae97",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "menucncl.epf",
+      "rects": [
+        {
+          "left": 4,
+          "top": 16,
+          "right": 112,
+          "bottom": 32,
+          "w": 108,
+          "h": 16,
+          "fn": "0x00442d5e",
+          "site": "0x00442faa",
+          "runtime": false
+        },
+        {
+          "left": 4,
+          "top": 46,
+          "right": 112,
+          "bottom": 62,
+          "w": 108,
+          "h": 16,
+          "fn": "0x00442d5e",
+          "site": "0x00443054",
+          "runtime": false
+        },
+        {
+          "left": 446,
+          "top": 322,
+          "right": 562,
+          "bottom": 480,
+          "w": 116,
+          "h": 158,
+          "fn": "0x00442d5e",
+          "site": "0x00443160",
+          "runtime": false
+        },
+        {
+          "left": 11,
+          "top": 23,
+          "right": 119,
+          "bottom": 39,
+          "w": 108,
+          "h": 16,
+          "fn": "0x0044389c",
+          "site": "0x00443a96",
+          "runtime": false
+        },
+        {
+          "left": 11,
+          "top": 53,
+          "right": 119,
+          "bottom": 69,
+          "w": 108,
+          "h": 16,
+          "fn": "0x0044389c",
+          "site": "0x00443b13",
+          "runtime": false
+        },
+        {
+          "left": 11,
+          "top": 83,
+          "right": 119,
+          "bottom": 99,
+          "w": 108,
+          "h": 16,
+          "fn": "0x0044389c",
+          "site": "0x00443ba2",
+          "runtime": false
+        },
+        {
+          "left": 11,
+          "top": 113,
+          "right": 119,
+          "bottom": 129,
+          "w": 108,
+          "h": 16,
+          "fn": "0x0044389c",
+          "site": "0x00443c34",
+          "runtime": false
+        },
+        {
+          "left": 439,
+          "top": 315,
+          "right": 571,
+          "bottom": 479,
+          "w": 132,
+          "h": 164,
+          "fn": "0x0044389c",
+          "site": "0x00443d04",
+          "runtime": false
+        },
+        {
+          "left": 4,
+          "top": 16,
+          "right": 122,
+          "bottom": 32,
+          "w": 118,
+          "h": 16,
+          "fn": "0x00444697",
+          "site": "0x00444882",
+          "runtime": false
+        },
+        {
+          "left": 446,
+          "top": 322,
+          "right": 562,
+          "bottom": 480,
+          "w": 116,
+          "h": 158,
+          "fn": "0x00444697",
+          "site": "0x00444948",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "menuok.epf",
+      "rects": [
+        {
+          "left": 44,
+          "top": 134,
+          "right": 113,
+          "bottom": 150,
+          "w": 69,
+          "h": 16,
+          "fn": "0x00442d5e",
+          "site": "0x00442ece",
+          "runtime": false
+        },
+        {
+          "left": 51,
+          "top": 141,
+          "right": 120,
+          "bottom": 157,
+          "w": 69,
+          "h": 16,
+          "fn": "0x0044389c",
+          "site": "0x004439e4",
+          "runtime": false
+        },
+        {
+          "left": 44,
+          "top": 134,
+          "right": 113,
+          "bottom": 150,
+          "w": 69,
+          "h": 16,
+          "fn": "0x00444697",
+          "site": "0x004447d6",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "mns%03d.mpf",
+      "rects": [
+        {
+          "left": null,
+          "top": null,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x00434067",
+          "site": "0x00434360",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "money.epf",
+      "rects": [
+        {
+          "left": 70,
+          "top": 62,
+          "right": 140,
+          "bottom": 84,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00435211",
+          "site": "0x00435265",
+          "runtime": false
+        },
+        {
+          "left": 148,
+          "top": 62,
+          "right": 218,
+          "bottom": 84,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00435211",
+          "site": "0x004352d3",
+          "runtime": false
+        },
+        {
+          "left": 64,
+          "top": 12,
+          "right": 214,
+          "bottom": 24,
+          "w": 150,
+          "h": 12,
+          "fn": "0x00435211",
+          "site": "0x0043533e",
+          "runtime": false
+        },
+        {
+          "left": 21,
+          "top": 37,
+          "right": 217,
+          "bottom": 53,
+          "w": 196,
+          "h": 16,
+          "fn": "0x00435211",
+          "site": "0x00435404",
+          "runtime": false
+        },
+        {
+          "left": 204,
+          "top": 100,
+          "right": 436,
+          "bottom": 198,
+          "w": 232,
+          "h": 98,
+          "fn": "0x00435211",
+          "site": "0x00435486",
+          "runtime": false
+        },
+        {
+          "left": 70,
+          "top": 62,
+          "right": 140,
+          "bottom": 84,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00435634",
+          "site": "0x0043567f",
+          "runtime": false
+        },
+        {
+          "left": 148,
+          "top": 62,
+          "right": 218,
+          "bottom": 84,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00435634",
+          "site": "0x004356ed",
+          "runtime": false
+        },
+        {
+          "left": 64,
+          "top": 12,
+          "right": 214,
+          "bottom": 24,
+          "w": 150,
+          "h": 12,
+          "fn": "0x00435634",
+          "site": "0x00435758",
+          "runtime": false
+        },
+        {
+          "left": 21,
+          "top": 37,
+          "right": 217,
+          "bottom": 53,
+          "w": 196,
+          "h": 16,
+          "fn": "0x00435634",
+          "site": "0x0043581f",
+          "runtime": false
+        },
+        {
+          "left": 204,
+          "top": 100,
+          "right": 436,
+          "bottom": 198,
+          "w": 232,
+          "h": 98,
+          "fn": "0x00435634",
+          "site": "0x004358a1",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "nation.epf",
+      "rects": [
+        {
+          "left": null,
+          "top": null,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x00419e4f",
+          "site": "0x0041a4d4",
+          "runtime": true
+        },
+        {
+          "left": null,
+          "top": null,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x0041b843",
+          "site": "0x0041bd08",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "option01.epf",
+      "rects": [
+        {
+          "left": 85,
+          "top": 270,
+          "right": 155,
+          "bottom": 292,
+          "w": 70,
+          "h": 22,
+          "fn": "0x00475aa0",
+          "site": "0x00475afc",
+          "runtime": false
+        },
+        {
+          "left": 11,
+          "top": 69,
+          "right": 79,
+          "bottom": 89,
+          "w": 68,
+          "h": 20,
+          "fn": "0x00475aa0",
+          "site": "0x00475b66",
+          "runtime": false
+        },
+        {
+          "left": null,
+          "top": 100,
+          "right": null,
+          "bottom": 109,
+          "w": null,
+          "h": 9,
+          "fn": "0x00476492",
+          "site": "0x00476511",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "option02.epf",
+      "rects": [
+        {
+          "left": 94,
+          "top": 71,
+          "right": 142,
+          "bottom": 83,
+          "w": 48,
+          "h": 12,
+          "fn": "0x00475aa0",
+          "site": "0x00475bf1",
+          "runtime": false
+        },
+        {
+          "left": 11,
+          "top": 147,
+          "right": 79,
+          "bottom": 167,
+          "w": 68,
+          "h": 20,
+          "fn": "0x00475aa0",
+          "site": "0x00475c68",
+          "runtime": false
+        },
+        {
+          "left": 11,
+          "top": 173,
+          "right": 79,
+          "bottom": 193,
+          "w": 68,
+          "h": 20,
+          "fn": "0x00475aa0",
+          "site": "0x00475cf6",
+          "runtime": false
+        },
+        {
+          "left": 11,
+          "top": 199,
+          "right": 79,
+          "bottom": 219,
+          "w": 68,
+          "h": 20,
+          "fn": "0x00475aa0",
+          "site": "0x00475d8d",
+          "runtime": false
+        },
+        {
+          "left": 44,
+          "top": 233,
+          "right": 140,
+          "bottom": 253,
+          "w": 96,
+          "h": 20,
+          "fn": "0x00475aa0",
+          "site": "0x00475e27",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "option03.epf",
+      "rects": [
+        {
+          "left": 445,
+          "top": 2,
+          "right": 618,
+          "bottom": 310,
+          "w": 173,
+          "h": 308,
+          "fn": "0x00475aa0",
+          "site": "0x00475edb",
+          "runtime": false
+        },
+        {
+          "left": null,
+          "top": 100,
+          "right": null,
+          "bottom": 109,
+          "w": null,
+          "h": 9,
+          "fn": "0x00475aa0",
+          "site": "0x00475f79",
+          "runtime": true
+        },
+        {
+          "left": null,
+          "top": 126,
+          "right": null,
+          "bottom": 135,
+          "w": null,
+          "h": 9,
+          "fn": "0x00475aa0",
+          "site": "0x00476009",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "option04.epf",
+      "rects": [
+        {
+          "left": null,
+          "top": 126,
+          "right": null,
+          "bottom": 135,
+          "w": null,
+          "h": 9,
+          "fn": "0x00476492",
+          "site": "0x004765cc",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "Portrait.epf",
+      "rects": [
+        {
+          "left": null,
+          "top": 310,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x00401564",
+          "site": "0x00401746",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "setup02.epf",
+      "rects": [
+        {
+          "left": 250,
+          "top": 312,
+          "right": 320,
+          "bottom": 334,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0048d5bf",
+          "site": "0x0048d68f",
+          "runtime": false
+        },
+        {
+          "left": 27,
+          "top": 50,
+          "right": 106,
+          "bottom": 70,
+          "w": 79,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048d70c",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "setup03.epf",
+      "rects": [
+        {
+          "left": 140,
+          "top": 54,
+          "right": 240,
+          "bottom": 66,
+          "w": 100,
+          "h": 12,
+          "fn": "0x0048d5bf",
+          "site": "0x0048d7bc",
+          "runtime": false
+        },
+        {
+          "left": 27,
+          "top": 72,
+          "right": 106,
+          "bottom": 92,
+          "w": 79,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048d839",
+          "runtime": false
+        },
+        {
+          "left": 140,
+          "top": 76,
+          "right": 240,
+          "bottom": 88,
+          "w": 100,
+          "h": 12,
+          "fn": "0x0048d5bf",
+          "site": "0x0048d8e0",
+          "runtime": false
+        },
+        {
+          "left": 27,
+          "top": 94,
+          "right": 106,
+          "bottom": 114,
+          "w": 79,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048d95d",
+          "runtime": false
+        },
+        {
+          "left": 140,
+          "top": 98,
+          "right": 240,
+          "bottom": 110,
+          "w": 100,
+          "h": 12,
+          "fn": "0x0048d5bf",
+          "site": "0x0048da0d",
+          "runtime": false
+        },
+        {
+          "left": 108,
+          "top": 129,
+          "right": 176,
+          "bottom": 149,
+          "w": 68,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048da93",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "setup04.epf",
+      "rects": [
+        {
+          "left": 20,
+          "top": 129,
+          "right": 88,
+          "bottom": 149,
+          "w": 68,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048db3a",
+          "runtime": false
+        },
+        {
+          "left": 20,
+          "top": 163,
+          "right": 88,
+          "bottom": 183,
+          "w": 68,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048dbe1",
+          "runtime": false
+        },
+        {
+          "left": 140,
+          "top": 167,
+          "right": 240,
+          "bottom": 179,
+          "w": 100,
+          "h": 12,
+          "fn": "0x0048d5bf",
+          "site": "0x0048dc8e",
+          "runtime": false
+        },
+        {
+          "left": 20,
+          "top": 185,
+          "right": 88,
+          "bottom": 205,
+          "w": 68,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048dd11",
+          "runtime": false
+        },
+        {
+          "left": 140,
+          "top": 189,
+          "right": 240,
+          "bottom": 201,
+          "w": 100,
+          "h": 12,
+          "fn": "0x0048d5bf",
+          "site": "0x0048ddbe",
+          "runtime": false
+        },
+        {
+          "left": 20,
+          "top": 207,
+          "right": 88,
+          "bottom": 227,
+          "w": 68,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048de41",
+          "runtime": false
+        },
+        {
+          "left": 98,
+          "top": 208,
+          "right": 182,
+          "bottom": 224,
+          "w": 84,
+          "h": 16,
+          "fn": "0x0048d5bf",
+          "site": "0x0048debf",
+          "runtime": false
+        },
+        {
+          "left": 188,
+          "top": 208,
+          "right": 310,
+          "bottom": 224,
+          "w": 122,
+          "h": 16,
+          "fn": "0x0048d5bf",
+          "site": "0x0048df56",
+          "runtime": false
+        },
+        {
+          "left": 20,
+          "top": 229,
+          "right": 88,
+          "bottom": 249,
+          "w": 68,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048dfe7",
+          "runtime": false
+        },
+        {
+          "left": 98,
+          "top": 230,
+          "right": 182,
+          "bottom": 246,
+          "w": 84,
+          "h": 16,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e065",
+          "runtime": false
+        },
+        {
+          "left": 188,
+          "top": 230,
+          "right": 310,
+          "bottom": 246,
+          "w": 122,
+          "h": 16,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e0f6",
+          "runtime": false
+        },
+        {
+          "left": 20,
+          "top": 251,
+          "right": 88,
+          "bottom": 271,
+          "w": 68,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e187",
+          "runtime": false
+        },
+        {
+          "left": 98,
+          "top": 252,
+          "right": 182,
+          "bottom": 268,
+          "w": 84,
+          "h": 16,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e20e",
+          "runtime": false
+        },
+        {
+          "left": 188,
+          "top": 252,
+          "right": 310,
+          "bottom": 268,
+          "w": 122,
+          "h": 16,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e2a5",
+          "runtime": false
+        },
+        {
+          "left": 20,
+          "top": 273,
+          "right": 88,
+          "bottom": 293,
+          "w": 68,
+          "h": 20,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e330",
+          "runtime": false
+        },
+        {
+          "left": 98,
+          "top": 274,
+          "right": 182,
+          "bottom": 290,
+          "w": 84,
+          "h": 16,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e3ae",
+          "runtime": false
+        },
+        {
+          "left": 188,
+          "top": 274,
+          "right": 310,
+          "bottom": 290,
+          "w": 122,
+          "h": 16,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e43f",
+          "runtime": false
+        },
+        {
+          "left": 150,
+          "top": 70,
+          "right": 486,
+          "bottom": 420,
+          "w": 336,
+          "h": 350,
+          "fn": "0x0048d5bf",
+          "site": "0x0048e4f5",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "setup05.epf",
+      "rects": [
+        {
+          "left": null,
+          "top": 430,
+          "right": 220,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x0048d1fe",
+          "site": "0x0048d310",
+          "runtime": true
+        },
+        {
+          "left": 420,
+          "top": 430,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x0048d1fe",
+          "site": "0x0048d384",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "setup06.epf",
+      "rects": [
+        {
+          "left": 50,
+          "top": 378,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x0048d1fe",
+          "site": "0x0048d2a0",
+          "runtime": true
+        }
+      ]
+    },
+    {
+      "asset": "spellani.epf",
+      "rects": [
+        {
+          "left": 0,
+          "top": 0,
+          "right": 22,
+          "bottom": 230,
+          "w": 22,
+          "h": 230,
+          "fn": "0x0042596f",
+          "site": "0x00425ca0",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "spelled.epf",
+      "rects": [
+        {
+          "left": 4,
+          "top": null,
+          "right": null,
+          "bottom": null,
+          "w": null,
+          "h": null,
+          "fn": "0x0042596f",
+          "site": "0x00425a7f",
+          "runtime": true
+        },
+        {
+          "left": 3,
+          "top": null,
+          "right": 18,
+          "bottom": null,
+          "w": 15,
+          "h": null,
+          "fn": "0x0042596f",
+          "site": "0x00425b2b",
+          "runtime": true
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 22,
+          "bottom": 230,
+          "w": 22,
+          "h": 230,
+          "fn": "0x0042596f",
+          "site": "0x00425bf9",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "SSBOTTOM.EPF",
+      "rects": [
+        {
+          "left": 0,
+          "top": 0,
+          "right": 254,
+          "bottom": 80,
+          "w": 254,
+          "h": 80,
+          "fn": "0x0048a30e",
+          "site": "0x0048a3f8",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 254,
+          "bottom": 80,
+          "w": 254,
+          "h": 80,
+          "fn": "0x0048a30e",
+          "site": "0x0048a412",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 254,
+          "bottom": 26,
+          "w": 254,
+          "h": 26,
+          "fn": "0x0048a30e",
+          "site": "0x0048a450",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 254,
+          "bottom": 60,
+          "w": 254,
+          "h": 60,
+          "fn": "0x0048a30e",
+          "site": "0x0048a4f3",
+          "runtime": false
+        },
+        {
+          "left": 32,
+          "top": 26,
+          "right": 64,
+          "bottom": 58,
+          "w": 32,
+          "h": 32,
+          "fn": "0x0048a30e",
+          "site": "0x0048a53a",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 254,
+          "bottom": 80,
+          "w": 254,
+          "h": 80,
+          "fn": "0x0048b071",
+          "site": "0x0048b155",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 254,
+          "bottom": 80,
+          "w": 254,
+          "h": 80,
+          "fn": "0x0048b071",
+          "site": "0x0048b16c",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 254,
+          "bottom": 26,
+          "w": 254,
+          "h": 26,
+          "fn": "0x0048b071",
+          "site": "0x0048b19e",
+          "runtime": false
+        },
+        {
+          "left": 0,
+          "top": 0,
+          "right": 254,
+          "bottom": 60,
+          "w": 254,
+          "h": 60,
+          "fn": "0x0048b071",
+          "site": "0x0048b1e9",
+          "runtime": false
+        },
+        {
+          "left": 32,
+          "top": 26,
+          "right": 64,
+          "bottom": 58,
+          "w": 32,
+          "h": 32,
+          "fn": "0x0048b071",
+          "site": "0x0048b234",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "Stat001.epf",
+      "rects": [
+        {
+          "left": 374,
+          "top": 82,
+          "right": 424,
+          "bottom": 98,
+          "w": 50,
+          "h": 16,
+          "fn": "0x00427350",
+          "site": "0x004273e2",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "svrBtn.epf",
+      "rects": [
+        {
+          "left": 149,
+          "top": 103,
+          "right": 162,
+          "bottom": 147,
+          "w": 13,
+          "h": 44,
+          "fn": "0x004840b0",
+          "site": "0x004841ff",
+          "runtime": false
+        },
+        {
+          "left": 230,
+          "top": 150,
+          "right": 411,
+          "bottom": 331,
+          "w": 181,
+          "h": 181,
+          "fn": "0x004840b0",
+          "site": "0x004842d8",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "SvrDlg.epf",
+      "rects": [
+        {
+          "left": 149,
+          "top": 57,
+          "right": 162,
+          "bottom": 102,
+          "w": 13,
+          "h": 45,
+          "fn": "0x004840b0",
+          "site": "0x00484129",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "Users01.epf",
+      "rects": [
+        {
+          "left": 380,
+          "top": 272,
+          "right": 450,
+          "bottom": 294,
+          "w": 70,
+          "h": 22,
+          "fn": "0x0042ad2f",
+          "site": "0x0042ad8b",
+          "runtime": false
+        },
+        {
+          "left": 299,
+          "top": null,
+          "right": 367,
+          "bottom": null,
+          "w": 68,
+          "h": null,
+          "fn": "0x0042ad2f",
+          "site": "0x0042ae22",
+          "runtime": true
+        },
+        {
+          "left": 28,
+          "top": 24,
+          "right": 268,
+          "bottom": 276,
+          "w": 240,
+          "h": 252,
+          "fn": "0x0042ad2f",
+          "site": "0x0042aec4",
+          "runtime": false
+        },
+        {
+          "left": 463,
+          "top": 2,
+          "right": 618,
+          "bottom": 310,
+          "w": 155,
+          "h": 308,
+          "fn": "0x0042ad2f",
+          "site": "0x0042b008",
+          "runtime": false
+        },
+        {
+          "left": 152,
+          "top": 2,
+          "right": 618,
+          "bottom": 310,
+          "w": 466,
+          "h": 308,
+          "fn": "0x0042ad2f",
+          "site": "0x0042b04a",
+          "runtime": false
+        }
+      ]
+    },
+    {
+      "asset": "Users04.epf",
+      "rects": [
+        {
+          "left": 0,
+          "top": 0,
+          "right": 290,
+          "bottom": 308,
+          "w": 290,
+          "h": 308,
+          "fn": "0x0042b44f",
+          "site": "0x0042b697",
+          "runtime": false
+        }
+      ]
+    }
+  ]
+}

@@ -16,6 +16,7 @@ _SETUP.*
 render/
 out/
 *.png
+docs/screen_anatomy_regions.json
 
 # Python
 __pycache__/

@@ -22,6 +22,7 @@ scripts/
   extract_layout.py recover the UI rectangle layout from DarkAges.exe -> Markdown table
 docs/
   ui-layout-350.md  the recovered layout: 691 UI rects across 54 named windows
+  ui-350.json       machine-readable UI spec (windows + rects + screen constants)
 ```
 
 ## The formats (recovered)
@@ -41,7 +42,10 @@ The client places every interface rectangle through one constructor,
 finds all **691** call sites, decodes the Left/Top/Right/Bottom immediates, and attributes each rect to the
 asset loaded just before it — yielding on-screen geometry for **54 named windows** (game shell, orbs,
 stat panel, login/creation dialogs, equipment, exchange, merchant, message board, and more) in the
-client's 640×480 UI space. See [`docs/ui-layout-350.md`](docs/ui-layout-350.md).
+client's 640×480 UI space. See [`docs/ui-layout-350.md`](docs/ui-layout-350.md) for the human-readable
+table and [`docs/ui-350.json`](docs/ui-350.json) for a machine-readable spec (per-window rects plus
+screen constants — 640×480 space, 32px tiles, the full-screen background blit, the world-viewport draw
+rect, chat-panel and toolbar rects, and the HP/MP orb loader) that a client can load directly.
 
 It's a DirectDraw client (`ddraw.dll` + GDI), built without ASLR, so virtual addresses equal runtime
 addresses. Constructor VA is for the v3.50 build; pass a different VA as the 3rd arg to `extract_layout.py`
