@@ -99,4 +99,17 @@ public sealed class Epf
     }
 
     public EpfFrame FirstDrawable => Frames.First(f => f.Width > 0 && f.Height > 0);
+
+    /// <summary>Frames that actually have pixels, in file order.</summary>
+    public IReadOnlyList<EpfFrame> Drawable => Frames.Where(f => f.Width > 0 && f.Height > 0).ToList();
+
+    /// <summary>Pick a fill frame by percentage. Frame 0 = full, last = empty
+    /// (matches the orb001/002.epf ordering: 100% -> frame 0, 0% -> last).</summary>
+    public EpfFrame FrameForFill(int percent)
+    {
+        var d = Drawable;
+        percent = Math.Clamp(percent, 0, 100);
+        int idx = (int)Math.Round((100 - percent) / 100.0 * (d.Count - 1));
+        return d[Math.Clamp(idx, 0, d.Count - 1)];
+    }
 }

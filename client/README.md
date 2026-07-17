@@ -10,11 +10,14 @@ build on top.
 
 ```sh
 cd client
-dotnet run -c Release -- <DarkAges.dat> ../docs/ui-350.json play_screen.png --map
+# a gameplay moment: HP 55%, MP 30%, with the stats/equipment/spell windows open
+dotnet run -c Release -- <DarkAges.dat> ../docs/ui-350.json state.png --hp 55 --mp 30 --open equip01,spell001,stat001
 ```
 
 - `<DarkAges.dat>` — your own copy (not included in this repo).
-- `--map` (optional) overlays the recovered HUD region outlines (chat, minimap, HP/MP orbs).
+- `--hp N` / `--mp N` — orb fill percent (0–100); selects the `orb001/002.epf` fill frame (frame 0 = full).
+- `--open a,b,c` — composite these window sprites at their catalog positions (see `WindowCatalog.cs`).
+- `--map` — overlay the recovered HUD region outlines (chat, minimap, HP/MP orbs).
 
 ## What's inside
 
@@ -23,7 +26,8 @@ dotnet run -c Release -- <DarkAges.dat> ../docs/ui-350.json play_screen.png --ma
 | `Assets.cs` | `DatArchive` (archive TOC), `Epf` (sprite frames), `Palette` (256-colour, DAC-aware) |
 | `Png.cs` | `Canvas` — indexed-sprite blit + a from-scratch PNG writer (uses `System.IO.Compression.ZLibStream`) |
 | `UiSpec.cs` | loads `ui-350.json` (screen constants + rects) via `System.Text.Json` |
-| `Program.cs` | composites the play screen from the spec |
+| `WindowCatalog.cs` | default on-screen positions for the in-game windows |
+| `Program.cs` | composites a client state (background + orbs + open windows) from the spec |
 
 Everything is deliberately dependency-free so the harness builds and runs offline. Ports of the same format
 readers used by the Python `scripts/`.
