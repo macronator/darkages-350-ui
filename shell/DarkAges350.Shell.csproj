@@ -20,6 +20,7 @@
     <Compile Include="..\client\UiSpec.cs" Link="shared\UiSpec.cs" />
     <Compile Include="..\client\WindowCatalog.cs" Link="shared\WindowCatalog.cs" />
     <Compile Include="..\client\Font.cs" Link="shared\Font.cs" />
+    <Compile Include="..\client\World.cs" Link="shared\World.cs" />
   </ItemGroup>
 
 </Project>

@@ -38,6 +38,27 @@ public sealed class ShellForm : Form
 
         var bgCanvas = new Canvas(spec.Space.Width, spec.Space.Height);
         bgCanvas.Blit(new Epf(dat.Read(spec.Constants.BackgroundAsset)).FirstDrawable, _pal, 0, 0, opaque: true);
+
+        // live isometric world floor in the viewport, if a map + tile atlas are available
+        // (DA_MAP env var or a lod1.map next to the exe). Falls back to a black viewport.
+        try
+        {
+            string? mapPath = Environment.GetEnvironmentVariable("DA_MAP");
+            if (string.IsNullOrEmpty(mapPath) || !File.Exists(mapPath))
+            {
+                var cand = Path.Combine(AppContext.BaseDirectory, "lod1.map");
+                if (File.Exists(cand)) mapPath = cand;
+            }
+            if (!string.IsNullOrEmpty(mapPath) && File.Exists(mapPath))
+            {
+                var atlas = TileAtlas.FromArchive(dat);
+                var tilePal = new Palette(dat.Read("field001.pal"));
+                var map = WorldMap.FromFile(mapPath);
+                map.DrawFloor(bgCanvas, atlas, tilePal, 2, 2, 610, 315, map.Width / 2, map.Height / 2);
+            }
+        }
+        catch { /* no world assets in this archive -> viewport stays black */ }
+
         // static chat lines drawn into the chat panel with the real DA font
         if (spec.Constants.ChatPanelRect is Rect cp)
         {
