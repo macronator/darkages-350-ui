@@ -13,6 +13,8 @@ public sealed class ShellForm : Form
     private readonly Palette _pal;
     private readonly Bitmap _bg;
     private readonly Bitmap[] _hpFrames, _mpFrames;
+    private readonly DaFont _font;
+    private static readonly (byte r, byte g, byte b) Amber = (235, 215, 150);
     private readonly Dictionary<string, Bitmap> _winCache = new(StringComparer.OrdinalIgnoreCase);
 
     private int _hp = 100, _mp = 100;
@@ -32,8 +34,17 @@ public sealed class ShellForm : Form
         _dat = dat; _spec = spec;
         _pal = new Palette(dat.Read(spec.DefaultUiPalette));
 
+        _font = DaFont.Load(dat, "eng00.fnt");
+
         var bgCanvas = new Canvas(spec.Space.Width, spec.Space.Height);
         bgCanvas.Blit(new Epf(dat.Read(spec.Constants.BackgroundAsset)).FirstDrawable, _pal, 0, 0, opaque: true);
+        // static chat lines drawn into the chat panel with the real DA font
+        if (spec.Constants.ChatPanelRect is Rect cp)
+        {
+            string[] chat = { "[System] Welcome to Temuair.", "Deoxys: reconstruction online!", "Aisling the Wizard has entered." };
+            int y = cp.Top + 6;
+            foreach (var line in chat) { _font.Draw(bgCanvas, line, cp.Left + 10, y, Amber); y += _font.Height() + 3; }
+        }
         _bg = Gdi.ToBitmap(bgCanvas);
 
         _hpFrames = LoadFrames(spec.Constants.OrbHpAsset);
@@ -79,6 +90,18 @@ public sealed class ShellForm : Form
         DrawOrb(g, _hpFrames, _hp, _spec.Constants.OrbHpRect);
         DrawOrb(g, _mpFrames, _mp, _spec.Constants.OrbMpRect);
         foreach (var w in _open) g.DrawImageUnscaled(w.Bmp, w.X, w.Y);
+        // live status text (updates as HP/MP change) drawn with the DA font, top-left of the viewport
+        using var status = TextBitmap($"Deoxys the Wizard   HP {_hp}%  MP {_mp}%", Amber);
+        g.DrawImageUnscaled(status, 6, 6);
+    }
+
+    private Bitmap TextBitmap(string s, (byte r, byte g, byte b) col, int scale = 1)
+    {
+        int w = Math.Max(1, _font.Measure(s, scale: scale) + 1);
+        int h = Math.Max(1, _font.Height(scale) + 1);
+        var c = new Canvas(w, h);                 // zeroed => transparent; DaFont sets alpha only on glyph pixels
+        _font.Draw(c, s, 0, 0, col, scale: scale);
+        return Gdi.ToBitmap(c);
     }
 
     private static void DrawOrb(Graphics g, Bitmap[] frames, int pct, Rect? rect)
