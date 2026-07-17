@@ -21,6 +21,7 @@ public sealed class ShellForm : Form
     private WorldMap? _worldMap;
     private TileAtlas? _worldAtlas;
     private Palette? _tilePal;
+    private HpfTile.WallCache? _walls;
     private Bitmap? _worldBmp;
     private int _camX, _camY;
     private static readonly Rectangle Viewport = new(2, 2, 608, 313);
@@ -68,6 +69,7 @@ public sealed class ShellForm : Form
             {
                 _worldAtlas = TileAtlas.FromArchive(dat);
                 _tilePal = new Palette(dat.Read("field001.pal"));
+                _walls = new HpfTile.WallCache(dat);
                 _worldMap = WorldMap.FromFile(mapPath);
                 _camX = _worldMap.Width / 2; _camY = _worldMap.Height / 2;
                 // scatter a few creatures near the start so you meet them while walking
@@ -133,6 +135,10 @@ public sealed class ShellForm : Form
         var c = new Canvas(_spec.Space.Width, _spec.Space.Height);   // 640x480, transparent (matches the composite)
         _worldMap.DrawFloor(c, _worldAtlas, _tilePal,
             Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
+        // walls / static objects rising from tile back-edges
+        if (_walls != null)
+            _worldMap.DrawWalls(c, _walls, _tilePal,
+                Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
         // creatures on the map, depth-sorted (farther first) so nearer ones overlap correctly
         foreach (var m in _monsters.OrderBy(m => m.mx + m.my))
         {

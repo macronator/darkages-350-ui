@@ -43,22 +43,64 @@ public sealed class TileAtlas
 public sealed class WorldMap
 {
     public readonly int Width, Height;
-    private readonly ushort[] _floor;
+    private readonly ushort[] _floor, _left, _right;
 
     public WorldMap(byte[] mapBytes, int width = 0)
     {
         int n = mapBytes.Length / 6;
         Width = width > 0 ? width : (int)Math.Round(Math.Sqrt(n));
         Height = Width > 0 ? n / Width : 0;
-        _floor = new ushort[n];
+        _floor = new ushort[n]; _left = new ushort[n]; _right = new ushort[n];
         for (int i = 0; i < n; i++)
+        {
             _floor[i] = (ushort)(mapBytes[i * 6] | (mapBytes[i * 6 + 1] << 8));
+            _left[i] = (ushort)(mapBytes[i * 6 + 2] | (mapBytes[i * 6 + 3] << 8));
+            _right[i] = (ushort)(mapBytes[i * 6 + 4] | (mapBytes[i * 6 + 5] << 8));
+        }
     }
 
     public static WorldMap FromFile(string path, int width = 0) => new(File.ReadAllBytes(path), width);
 
     public ushort FloorAt(int mx, int my) =>
         (mx >= 0 && my >= 0 && mx < Width && my < Height) ? _floor[my * Width + mx] : (ushort)0;
+
+    /// <summary>Draw the left/right wall (stc) tiles for every cell, back-to-front, camera-centered.
+    /// Walls rise from each tile's back edges. Interleaved by (mx+my) so nearer walls occlude farther.</summary>
+    public void DrawWalls(Canvas c, HpfTile.WallCache walls, Palette wallPal, int vx0, int vy0, int vx1, int vy1, int camX, int camY)
+    {
+        foreach (int i in Enumerable.Range(0, _floor.Length).OrderBy(i => (i % Width) + (i / Width)))
+        {
+            int mx = i % Width, my = i / Width;
+            if (_left[i] == 0 && _right[i] == 0) continue;
+            var (sx, sy) = TileTopLeft(mx, my, vx0, vy0, vx1, vy1, camX, camY);
+            if (sx > vx1 || sx + TileAtlas.TW < vx0 || sy > vy1 + 200 || sy + StepY < vy0 - 300) continue;
+            if (_left[i] != 0) DrawWallTile(c, walls.Get(_left[i]), wallPal, sx, sy + StepY, vx0, vy0, vx1, vy1);
+            if (_right[i] != 0) DrawWallTile(c, walls.Get(_right[i]), wallPal, sx + HpfTile.Width, sy + StepY, vx0, vy0, vx1, vy1);
+        }
+    }
+
+    // draw a 28-wide wall tile so its bottom sits at (x, footY), rising upward
+    private static void DrawWallTile(Canvas c, HpfTile? t, Palette pal, int x, int footY, int vx0, int vy0, int vx1, int vy1)
+    {
+        if (t == null || t.Pixels.Length == 0) return;
+        int h = t.Height, y0 = footY - h;
+        for (int y = 0; y < h; y++)
+        {
+            int dy = y0 + y;
+            if (dy < vy0 || dy >= vy1) continue;
+            int row = y * HpfTile.Width;
+            for (int px = 0; px < HpfTile.Width; px++)
+            {
+                byte idx = t.Pixels[row + px];
+                if (idx == 0) continue;
+                int dx = x + px;
+                if (dx < vx0 || dx >= vx1) continue;
+                var (r, g, b) = pal.Colors[idx];
+                int o = (dy * c.W + dx) * 4;
+                c.Rgba[o] = r; c.Rgba[o + 1] = g; c.Rgba[o + 2] = b; c.Rgba[o + 3] = 255;
+            }
+        }
+    }
 
     /// <summary>Draw a top-down minimap into a box: each cell = its floor tile's average colour,
     /// the camera cell marked. Scales the whole map to fit.</summary>

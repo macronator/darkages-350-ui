@@ -22,6 +22,7 @@
     <Compile Include="..\client\Font.cs" Link="shared\Font.cs" />
     <Compile Include="..\client\World.cs" Link="shared\World.cs" />
     <Compile Include="..\client\Mpf.cs" Link="shared\Mpf.cs" />
+    <Compile Include="..\client\Hpf.cs" Link="shared\Hpf.cs" />
   </ItemGroup>
 
 </Project>
