@@ -28,6 +28,7 @@ public sealed class ShellForm : Form
 
     private sealed class Monster { public int Mx, My; public required Bitmap Bmp; }
     private readonly List<Monster> _monsters = new();
+    private Bitmap? _playerBmp;              // placeholder avatar (stand-in for the layered paperdoll)
     private readonly Random _rng = new();
     private int _tick;
 
@@ -77,7 +78,7 @@ public sealed class ShellForm : Form
                 _worldMap = WorldMap.FromFile(mapPath);
                 _camX = _worldMap.Width / 2; _camY = _worldMap.Height / 2;
                 // scatter a few creatures near the start so you meet them while walking
-                foreach (var (nm, dx, dy) in new[] { ("mns001", 2, -1), ("mns010", -3, 1), ("mns030", 1, 3), ("mns050", 4, 2), ("mns010", -2, -3) })
+                foreach (var (nm, dx, dy) in new[] { ("mns001", 2, -1), ("mns010", -3, 1), ("mns060", 1, 3), ("mns050", 4, 2), ("mns010", -2, -3) })
                     try
                     {
                         var spr = MpfSprite.FromArchive(dat, nm);
@@ -85,6 +86,8 @@ public sealed class ShellForm : Form
                             _monsters.Add(new Monster { Mx = _camX + dx, My = _camY + dy, Bmp = Gdi.MpfToBitmap(spr.Frames[0], _pal) });
                     }
                     catch { }
+                // placeholder player avatar at screen centre (a human sprite until the real body paperdoll exists)
+                try { var ps = MpfSprite.FromArchive(dat, "mns030"); if (ps.Frames.Count > 0) _playerBmp = Gdi.MpfToBitmap(ps.Frames[0], _pal); } catch { }
             }
         }
         catch { _worldMap = null; }
@@ -175,15 +178,17 @@ public sealed class ShellForm : Form
         var g = e.Graphics;
         g.DrawImageUnscaled(_bg, 0, 0);
         if (_worldBmp != null) g.DrawImageUnscaled(_worldBmp, 0, 0);   // world tiles over the black viewport
-        // live creature layer: wandering monsters, depth-sorted, clipped to the viewport
-        if (_monsters.Count > 0)
+        // live creature layer: wandering monsters + the player avatar, depth-sorted, clipped to the viewport
+        if (_worldMap != null)
         {
+            var entities = _monsters.Select(m => (m.Mx, m.My, m.Bmp)).ToList();
+            if (_playerBmp != null) entities.Add((_camX, _camY, _playerBmp));   // player is always at camera centre
             var save0 = g.Clip;
             g.SetClip(Viewport);
-            foreach (var m in _monsters.OrderBy(m => m.Mx + m.My))
+            foreach (var (mx, my, bmp) in entities.OrderBy(e => e.Item1 + e.Item2))
             {
-                var (sx, sy) = WorldMap.TileTopLeft(m.Mx, m.My, Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
-                g.DrawImageUnscaled(m.Bmp, sx + TileAtlas.TW / 2 - m.Bmp.Width / 2, sy + 24 - m.Bmp.Height);
+                var (sx, sy) = WorldMap.TileTopLeft(mx, my, Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
+                g.DrawImageUnscaled(bmp, sx + TileAtlas.TW / 2 - bmp.Width / 2, sy + 24 - bmp.Height);
             }
             g.Clip = save0;
         }
@@ -333,7 +338,7 @@ public sealed class ShellForm : Form
         string controls = _worldMap != null
             ? "arrows walk · R rain · +/- HP · PgUp/PgDn MP · 1-9 open · Esc close"
             : "↑↓ HP · ←→ MP · R rain · 1-9 open · Esc close";
-        string where = _worldMap != null ? $"  @({_camX},{_camY})" : "";
+        string where = _worldMap != null ? $"  Deoxys @({_camX},{_camY})" : "";
         Text = $"Dark Ages 3.50 — client shell   HP {_hp}%  MP {_mp}%{where}   [{controls}]";
     }
 }
