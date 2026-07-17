@@ -1,0 +1,24 @@
+# Game data — never commit (copyrighted, not ours to redistribute)
+*.dat
+*.exe
+*.epf
+*.mpf
+*.spf
+*.hpf
+*.pal
+*.fnt
+*.tbl
+*.wav
+*.bmp
+_SETUP.*
+
+# Render/extract outputs
+render/
+out/
+*.png
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
