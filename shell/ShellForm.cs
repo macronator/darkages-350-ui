@@ -25,6 +25,12 @@ public sealed class ShellForm : Form
     private int _camX, _camY;
     private static readonly Rectangle Viewport = new(2, 2, 608, 313);
 
+    // animated weather overlay (falling rain), scrolled by a timer
+    private Bitmap? _weather;
+    private int _weatherY;
+    private bool _weatherOn = true;
+    private System.Windows.Forms.Timer? _rainTimer;
+
     private int _hp = 100, _mp = 100;
     private readonly List<OpenWin> _open = new();
     private OpenWin? _drag;
@@ -76,6 +82,17 @@ public sealed class ShellForm : Form
         }
         _bg = Gdi.ToBitmap(bgCanvas);
         RenderWorld();
+
+        // weather overlay (rain), animated by a timer
+        try
+        {
+            var rain = new Epf(dat.Read("rain01.epf")).FirstDrawable;
+            _weather = Gdi.FrameToBitmap(rain, _pal);            // index 0 transparent
+            _rainTimer = new System.Windows.Forms.Timer { Interval = 90 };
+            _rainTimer.Tick += (_, _) => { if (_weatherOn && _weather != null) { _weatherY = (_weatherY + 4) % _weather.Height; Invalidate(Viewport); } };
+            _rainTimer.Start();
+        }
+        catch { _weather = null; }
 
         _hpFrames = LoadFrames(spec.Constants.OrbHpAsset);
         _mpFrames = LoadFrames(spec.Constants.OrbMpAsset);
@@ -137,6 +154,14 @@ public sealed class ShellForm : Form
         var g = e.Graphics;
         g.DrawImageUnscaled(_bg, 0, 0);
         if (_worldBmp != null) g.DrawImageUnscaled(_worldBmp, 0, 0);   // world tiles over the black viewport
+        if (_weatherOn && _weather != null)                           // scrolling rain, clipped to the viewport
+        {
+            var save = g.Clip;
+            g.SetClip(Viewport);
+            g.DrawImageUnscaled(_weather, Viewport.Left, Viewport.Top - _weatherY);
+            g.DrawImageUnscaled(_weather, Viewport.Left, Viewport.Top - _weatherY + _weather.Height);
+            g.Clip = save;
+        }
         DrawOrb(g, _hpFrames, _hp, _spec.Constants.OrbHpRect);
         DrawOrb(g, _mpFrames, _mp, _spec.Constants.OrbMpRect);
         foreach (var w in _open) g.DrawImageUnscaled(w.Bmp, w.X, w.Y);
@@ -202,6 +227,7 @@ public sealed class ShellForm : Form
             case Keys.OemMinus or Keys.Subtract: _hp = Math.Max(0, _hp - 5); break;
             case Keys.PageUp: _mp = Math.Min(100, _mp + 5); break;
             case Keys.PageDown: _mp = Math.Max(0, _mp - 5); break;
+            case Keys.R: _weatherOn = !_weatherOn; break;   // toggle rain
             case Keys.Escape when _open.Count > 0: _open.RemoveAt(_open.Count - 1); break;
             default:
                 if (e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9)
@@ -242,8 +268,8 @@ public sealed class ShellForm : Form
     private void UpdateTitle()
     {
         string controls = _worldMap != null
-            ? "arrows walk · +/- HP · PgUp/PgDn MP · 1-9 open · Esc close"
-            : "↑↓ HP · ←→ MP · 1-9 open · Esc close";
+            ? "arrows walk · R rain · +/- HP · PgUp/PgDn MP · 1-9 open · Esc close"
+            : "↑↓ HP · ←→ MP · R rain · 1-9 open · Esc close";
         string where = _worldMap != null ? $"  @({_camX},{_camY})" : "";
         Text = $"Dark Ages 3.50 — client shell   HP {_hp}%  MP {_mp}%{where}   [{controls}]";
     }
