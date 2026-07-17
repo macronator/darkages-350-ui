@@ -23,3 +23,7 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# .NET build outputs
+bin/
+obj/
