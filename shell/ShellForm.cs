@@ -17,6 +17,14 @@ public sealed class ShellForm : Form
     private static readonly (byte r, byte g, byte b) Amber = (235, 215, 150);
     private readonly Dictionary<string, Bitmap> _winCache = new(StringComparer.OrdinalIgnoreCase);
 
+    // world (viewport) — walkable via the arrow keys
+    private WorldMap? _worldMap;
+    private TileAtlas? _worldAtlas;
+    private Palette? _tilePal;
+    private Bitmap? _worldBmp;
+    private int _camX, _camY;
+    private static readonly Rectangle Viewport = new(2, 2, 608, 313);
+
     private int _hp = 100, _mp = 100;
     private readonly List<OpenWin> _open = new();
     private OpenWin? _drag;
@@ -39,8 +47,8 @@ public sealed class ShellForm : Form
         var bgCanvas = new Canvas(spec.Space.Width, spec.Space.Height);
         bgCanvas.Blit(new Epf(dat.Read(spec.Constants.BackgroundAsset)).FirstDrawable, _pal, 0, 0, opaque: true);
 
-        // live isometric world floor in the viewport, if a map + tile atlas are available
-        // (DA_MAP env var or a lod1.map next to the exe). Falls back to a black viewport.
+        // load the walkable world if a map + tile atlas are available (DA_MAP env or lod1.map next to
+        // the exe). Rendered per-camera in RenderWorld(); falls back to a black viewport.
         try
         {
             string? mapPath = Environment.GetEnvironmentVariable("DA_MAP");
@@ -51,13 +59,13 @@ public sealed class ShellForm : Form
             }
             if (!string.IsNullOrEmpty(mapPath) && File.Exists(mapPath))
             {
-                var atlas = TileAtlas.FromArchive(dat);
-                var tilePal = new Palette(dat.Read("field001.pal"));
-                var map = WorldMap.FromFile(mapPath);
-                map.DrawFloor(bgCanvas, atlas, tilePal, 2, 2, 610, 315, map.Width / 2, map.Height / 2);
+                _worldAtlas = TileAtlas.FromArchive(dat);
+                _tilePal = new Palette(dat.Read("field001.pal"));
+                _worldMap = WorldMap.FromFile(mapPath);
+                _camX = _worldMap.Width / 2; _camY = _worldMap.Height / 2;
             }
         }
-        catch { /* no world assets in this archive -> viewport stays black */ }
+        catch { _worldMap = null; }
 
         // static chat lines drawn into the chat panel with the real DA font
         if (spec.Constants.ChatPanelRect is Rect cp)
@@ -67,6 +75,7 @@ public sealed class ShellForm : Form
             foreach (var line in chat) { _font.Draw(bgCanvas, line, cp.Left + 10, y, Amber); y += _font.Height() + 3; }
         }
         _bg = Gdi.ToBitmap(bgCanvas);
+        RenderWorld();
 
         _hpFrames = LoadFrames(spec.Constants.OrbHpAsset);
         _mpFrames = LoadFrames(spec.Constants.OrbMpAsset);
@@ -91,6 +100,22 @@ public sealed class ShellForm : Form
     /// <summary>Set orb levels programmatically (used for headless frame capture).</summary>
     public void SetLevels(int hp, int mp) { _hp = Math.Clamp(hp, 0, 100); _mp = Math.Clamp(mp, 0, 100); UpdateTitle(); Invalidate(); }
 
+    /// <summary>Set the world camera cell (used for headless frame capture).</summary>
+    public void SetCamera(int x, int y) { _camX = x; _camY = y; RenderWorld(); UpdateTitle(); Invalidate(); }
+
+    /// <summary>Render the world floor at the current camera into a transparent viewport bitmap.</summary>
+    private void RenderWorld()
+    {
+        if (_worldMap == null || _worldAtlas == null || _tilePal == null) return;
+        _camX = Math.Clamp(_camX, 0, _worldMap.Width - 1);
+        _camY = Math.Clamp(_camY, 0, _worldMap.Height - 1);
+        var c = new Canvas(_spec.Space.Width, _spec.Space.Height);   // 640x480, transparent (matches the composite)
+        _worldMap.DrawFloor(c, _worldAtlas, _tilePal,
+            Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
+        _worldBmp?.Dispose();
+        _worldBmp = Gdi.ToBitmap(c);
+    }
+
     private Bitmap[] LoadFrames(string asset)
     {
         try { return new Epf(_dat.Read(asset)).Drawable.Select(f => Gdi.FrameToBitmap(f, _pal)).ToArray(); }
@@ -108,6 +133,7 @@ public sealed class ShellForm : Form
     {
         var g = e.Graphics;
         g.DrawImageUnscaled(_bg, 0, 0);
+        if (_worldBmp != null) g.DrawImageUnscaled(_worldBmp, 0, 0);   // world tiles over the black viewport
         DrawOrb(g, _hpFrames, _hp, _spec.Constants.OrbHpRect);
         DrawOrb(g, _mpFrames, _mp, _spec.Constants.OrbMpRect);
         foreach (var w in _open) g.DrawImageUnscaled(w.Bmp, w.X, w.Y);
@@ -156,12 +182,23 @@ public sealed class ShellForm : Form
 
     protected override void OnKeyDown(KeyEventArgs e)
     {
+        bool worldOn = _worldMap != null;
         switch (e.KeyCode)
         {
+            // arrow keys walk the world (pan the camera one iso cell); if no world, they nudge HP/MP
+            case Keys.Up when worldOn: Walk(-1, -1); break;
+            case Keys.Down when worldOn: Walk(+1, +1); break;
+            case Keys.Left when worldOn: Walk(-1, +1); break;
+            case Keys.Right when worldOn: Walk(+1, -1); break;
             case Keys.Up: _hp = Math.Min(100, _hp + 5); break;
             case Keys.Down: _hp = Math.Max(0, _hp - 5); break;
             case Keys.Right: _mp = Math.Min(100, _mp + 5); break;
             case Keys.Left: _mp = Math.Max(0, _mp - 5); break;
+            // HP/MP on +/- and PageUp/PageDown when the arrows are busy walking
+            case Keys.Oemplus or Keys.Add: _hp = Math.Min(100, _hp + 5); break;
+            case Keys.OemMinus or Keys.Subtract: _hp = Math.Max(0, _hp - 5); break;
+            case Keys.PageUp: _mp = Math.Min(100, _mp + 5); break;
+            case Keys.PageDown: _mp = Math.Max(0, _mp - 5); break;
             case Keys.Escape when _open.Count > 0: _open.RemoveAt(_open.Count - 1); break;
             default:
                 if (e.KeyCode >= Keys.D1 && e.KeyCode <= Keys.D9)
@@ -197,6 +234,14 @@ public sealed class ShellForm : Form
 
     protected override void OnMouseUp(MouseEventArgs e) => _drag = null;
 
-    private void UpdateTitle() =>
-        Text = $"Dark Ages 3.50 — client shell   HP {_hp}%  MP {_mp}%   [1-9 open · ↑↓ HP · ←→ MP · Esc close]";
+    private void Walk(int dx, int dy) { _camX += dx; _camY += dy; RenderWorld(); }
+
+    private void UpdateTitle()
+    {
+        string controls = _worldMap != null
+            ? "arrows walk · +/- HP · PgUp/PgDn MP · 1-9 open · Esc close"
+            : "↑↓ HP · ←→ MP · 1-9 open · Esc close";
+        string where = _worldMap != null ? $"  @({_camX},{_camY})" : "";
+        Text = $"Dark Ages 3.50 — client shell   HP {_hp}%  MP {_mp}%{where}   [{controls}]";
+    }
 }

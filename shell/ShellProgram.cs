@@ -139,6 +139,12 @@ internal static class ShellProgram
         ApplicationConfiguration.Initialize();
         using var form = new ShellForm(dat, spec);
         form.SetLevels(hp, mp);
+        int ci = Array.IndexOf(args, "--cam");
+        if (ci >= 0 && ci + 1 < args.Length)
+        {
+            var p = args[ci + 1].Split(',');
+            if (p.Length == 2 && int.TryParse(p[0], out var cx) && int.TryParse(p[1], out var cy)) form.SetCamera(cx, cy);
+        }
         form.PreOpen(open);
         form.CreateControl();               // realise the handle so OnPaint can run
         var sz = form.ClientSize;
