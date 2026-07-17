@@ -51,6 +51,13 @@ It's a DirectDraw client (`ddraw.dll` + GDI), built without ASLR, so virtual add
 addresses. Constructor VA is for the v3.50 build; pass a different VA as the 3rd arg to `extract_layout.py`
 for other builds.
 
+About a third of the rects (213/691) have a coordinate computed at runtime rather than a literal — these
+are **procedurally generated**, not missing data. `ui-350.json`'s `runtime_layout` block documents the three
+generators a client reproduces instead of reading a constant: **index×stride** grids/lists (cell = base +
+index·pitch), **edge-anchored** coords (edge − offset), and **parent-relative** insets (child positioned from
+a parent widget's rect, stored at `+0x38`/`+0x3C`/`+0x40`/`+0x44` = L/T/R/B). Window-open dispatch (which
+button/index opens which window) is written up in [`docs/ui-dispatch-350.md`](docs/ui-dispatch-350.md).
+
 ## Quickstart
 
 ```sh

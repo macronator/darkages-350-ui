@@ -64,6 +64,56 @@
       "bottom": 417
     }
   },
+  "runtime_layout": {
+    "note": "213 of 691 rects (31%) have at least one coordinate computed at runtime; these are procedurally generated, not fixed values. A client reproduces them with the generators below rather than reading a constant.",
+    "classes": {
+      "index_x_stride": {
+        "count": 59,
+        "formula": "coord = base + index * pitch",
+        "use": "item/inventory grids, spell & skill grids, scrolling list rows",
+        "pitches_px": [
+          30,
+          19,
+          26,
+          23,
+          20,
+          57,
+          40,
+          35,
+          12,
+          10,
+          110,
+          151,
+          155,
+          205,
+          260
+        ]
+      },
+      "edge_anchored": {
+        "count": 22,
+        "formula": "coord = edge_base - offset",
+        "use": "elements pinned to the right/bottom edge of a panel or the screen",
+        "edge_bases_px": [
+          618,
+          558,
+          640,
+          455,
+          289
+        ]
+      },
+      "parent_relative": {
+        "count": 18,
+        "formula": "child = parent_rect.field +/- small_inset",
+        "use": "sub-widgets positioned inside a parent window",
+        "parent_rect_fields": {
+          "left": "+0x38",
+          "top": "+0x3C",
+          "right": "+0x40",
+          "bottom": "+0x44"
+        }
+      }
+    }
+  },
   "palettes": {
     "_default_ui": "legend.pal",
     "field001.epf": "field001.pal",
