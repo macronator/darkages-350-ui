@@ -10,9 +10,23 @@ verbatim (linked in the `.csproj`), so both stay in sync.
 
 ## Run
 
+From source (needs the .NET 10 SDK):
+
 ```sh
 cd shell
 dotnet run -c Release -- <DarkAges.dat> ../docs/ui-350.json
+```
+
+or from the repo root with `run-shell.cmd <DarkAges.dat>` (finds `docs/ui-350.json` automatically). With no
+paths given, the shell also looks for `DarkAges.dat` in `DA_DAT` / next to the exe / the working directory,
+and `ui-350.json` in `DA_SPEC` / next to the exe / `../docs` — so a published build with those two files
+beside it launches by **double-click**.
+
+Publish a standalone Windows executable (no SDK needed to run it):
+
+```sh
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o dist
+# copy DarkAges.dat and docs/ui-350.json next to dist/da350-shell.exe, then double-click it
 ```
 
 Controls: **1–9** open/close windows (stats, equipment, spells, skills, exchange, friends, game setting,
