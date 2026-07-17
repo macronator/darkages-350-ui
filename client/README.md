@@ -17,7 +17,13 @@ dotnet run -c Release -- <DarkAges.dat> ../docs/ui-350.json state.png --hp 55 --
 - `<DarkAges.dat>` — your own copy (not included in this repo).
 - `--hp N` / `--mp N` — orb fill percent (0–100); selects the `orb001/002.epf` fill frame (frame 0 = full).
 - `--open a,b,c` — composite these window sprites at their catalog positions (see `WindowCatalog.cs`).
+- `--world <lod*.map> [--cam x,y]` — render a live isometric floor in the viewport from a map layout.
+- `--say "line1|line2"` — draw chat lines in the chat panel with the DA bitmap font.
 - `--map` — overlay the recovered HUD region outlines (chat, minimap, HP/MP orbs).
+
+The **world** comes from `tilea.bmp` in your archive (5583 raw 56×27 isometric diamond tiles, `field001.pal`)
+plus a `lod*.map` layout (6-byte cells: floor / left-wall / right-wall). `World.cs` renders the floor layer
+camera-centered on a cell. Wall/entity sprites are the next layer.
 
 ## What's inside
 

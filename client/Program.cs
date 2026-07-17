@@ -35,6 +35,23 @@ var canvas = new Canvas(spec.Space.Width, spec.Space.Height);
 // 1) full-screen background chrome (opaque)
 canvas.Blit(new Epf(dat.Read(spec.Constants.BackgroundAsset)).FirstDrawable, pal, 0, 0, opaque: true);
 
+// 1b) live isometric world in the viewport (--world <lod*.map> [--cam x,y])
+int wIdx = Array.IndexOf(args, "--world");
+if (wIdx >= 0 && wIdx + 1 < args.Length)
+{
+    var atlas = TileAtlas.FromArchive(dat);
+    var tilePal = new Palette(dat.Read("field001.pal"));
+    var map = WorldMap.FromFile(args[wIdx + 1]);
+    int camX = map.Width / 2, camY = map.Height / 2;
+    int ci = Array.IndexOf(args, "--cam");
+    if (ci >= 0 && ci + 1 < args.Length)
+    {
+        var p = args[ci + 1].Split(',');
+        if (p.Length == 2 && int.TryParse(p[0], out var a) && int.TryParse(p[1], out var b)) { camX = a; camY = b; }
+    }
+    map.DrawFloor(canvas, atlas, tilePal, 2, 2, 610, 315, camX, camY);
+}
+
 // 2) HP / MP orbs filled to the requested percentage, at their exact recovered rects
 DrawOrb(spec.Constants.OrbHpAsset, spec.Constants.OrbHpRect, hp);
 DrawOrb(spec.Constants.OrbMpAsset, spec.Constants.OrbMpRect, mp);
