@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>da350-shell</AssemblyName>
+    <RootNamespace>DarkAges350</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <!-- Reuse the same asset readers / UI-spec loader as the cross-platform console harness,
+       so both stay in sync. Only the interactive window + GDI bridging live here. -->
+  <ItemGroup>
+    <Compile Include="..\client\Assets.cs" Link="shared\Assets.cs" />
+    <Compile Include="..\client\Png.cs" Link="shared\Png.cs" />
+    <Compile Include="..\client\UiSpec.cs" Link="shared\UiSpec.cs" />
+    <Compile Include="..\client\WindowCatalog.cs" Link="shared\WindowCatalog.cs" />
+  </ItemGroup>
+
+</Project>

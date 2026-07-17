@@ -24,7 +24,8 @@ docs/
   ui-layout-350.md  the recovered layout: 691 UI rects across 54 named windows
   ui-350.json       machine-readable UI spec (windows + rects + screen constants)
   ui-dispatch-350.md how the client opens/toggles windows (jump table + keyboard handler)
-client/             C# (.NET) render harness: reconstructs the play screen from ui-350.json
+client/             C# (.NET) render harness: reconstructs the play screen from ui-350.json (cross-platform, headless PNG)
+shell/              C# (WinForms) live client shell: interactive window driven by ui-350.json (Windows)
 ```
 
 ## The formats (recovered)
