@@ -12,8 +12,11 @@ internal static class ShellProgram
     [STAThread]
     private static int Main(string[] args)
     {
-        string? datPath = (args.Length >= 1 && !args[0].StartsWith("--")) ? args[0] : FindDat();
-        string? specPath = (args.Length >= 2 && !args[1].StartsWith("--")) ? args[1] : FindSpec();
+        // positional args = the leading non-flag args (a flag value like "--shot x.png" must never
+        // be mistaken for the dat/spec path).
+        var positional = args.TakeWhile(a => !a.StartsWith("--")).ToArray();
+        string? datPath = positional.Length >= 1 ? positional[0] : FindDat();
+        string? specPath = positional.Length >= 2 ? positional[1] : FindSpec();
 
         if (datPath == null || specPath == null)
         {
