@@ -24,11 +24,24 @@ The dispatcher is invoked **through a vtable** (indirect call), not a direct `ca
 toolbar buttons show no literal cross-reference to it. Wiring an individual toolbar-icon rect to the index
 it passes requires resolving the toolbar widget's vtable and per-button config (not yet done).
 
-## Keyboard-shortcut handler — `sub_425332`
+## A widget-local key handler — `sub_425332`
 
-On a keydown message (message type `[msg+0xC] == 8`), it reads the key code `[msg+0x10]`, range-checks it to
-`0x45..0x88`, and dispatches via a byte index table at `0x4254a5` into a jump table at `0x42548d` — i.e. the
-hotkey → window/action map. (Individual key→window entries are not yet fully decoded.)
+On a keydown message (message type `[msg+0xC] == 8`) this reads the key code `[msg+0x10]`, range-checks it to
+`0x45..0x88`, and dispatches through a byte index table at `0x4254a5` into a **6-entry** jump table at
+`0x42548d`. Decoding those tables shows it is **not** the global hotkey→window map — it is one widget's
+`OnKey` (it has no direct callers; it's reached via a vtable, and `this` carries the widget's own state):
+
+| case | target | effect |
+|--:|---|---|
+| 0,1,2 | `0x4253fc`/`0x4253ba`/`0x4253db` | set the widget's internal index `[this+0xE8]` (0/1/2) and refresh via `sub_42564c` |
+| 3 | `0x42541a` | open **Macro Setup** |
+| 4 | `0x42544a` | open **Game Setting** |
+| 5 | `0x42547a` | no-op (default — most keys land here) |
+
+The key codes indexing `0x4254a5` are the client's **own key enum**, not Windows virtual-key codes, so they
+can't be labelled without recovering that enum. The **global** game hotkeys (the F-key panel shortcuts players
+remember) are dispatched the same vtable way through the main window's `OnKey`; that map was not located as a
+decodable table and remains open.
 
 ## Notes for a reimplementation
 
