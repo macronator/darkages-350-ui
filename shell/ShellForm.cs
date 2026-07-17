@@ -112,6 +112,9 @@ public sealed class ShellForm : Form
         var c = new Canvas(_spec.Space.Width, _spec.Space.Height);   // 640x480, transparent (matches the composite)
         _worldMap.DrawFloor(c, _worldAtlas, _tilePal,
             Viewport.Left, Viewport.Top, Viewport.Right, Viewport.Bottom, _camX, _camY);
+        // minimap in its socket, marking the current position
+        if (_spec.Constants.MinimapRect is Rect mm)
+            _worldMap.DrawMinimap(c, _worldAtlas, _tilePal, mm.Left, mm.Top, mm.Right, mm.Bottom, _camX, _camY);
         _worldBmp?.Dispose();
         _worldBmp = Gdi.ToBitmap(c);
     }
